@@ -1,0 +1,31 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'GitHub Actions Marketplace News'
+theme = 'ananke'
+sectionPagesMenu = 'main'
+[menu]
+[[menu.main]]
+  name = 'About'
+  pageRef = '/about'
+  weight = 2
+[[menu.main]]
+  name = 'RSS'
+  url = '/index.xml'
+  weight = 1
+[outputs]
+  home = ["HTML", "RSS"]
+[params]
+  description = "Updates from the GitHub Actions Marketplace"
+  show_reading_time = "true" 
+  [[params.ananke_socials]]
+    name = "linkedin"
+    url = "https://linkedin.com/in/bosrob"
+  [[params.ananke_socials]]
+    name = "github"
+    url = "https://github.com/rajbos"
+  [[params.ananke_socials]]
+    name = "mastodon"
+    url = "https://mstdn.social/@Rob_Bos"
+    rel = "me noopener"
+[permalinks]
+  posts = '/blog/:year/:month/:day/:title/'

@@ -1,1 +1,1 @@
-Hosting AzureDevOps extenstion news through GitHub Pages
+Hosting GitHub Actions Marketplace news through GitHub Pages
