@@ -1,4 +1,4 @@
-baseURL = 'http://example.org/'
+baseURL = 'https://devops-actions.github.io/github-actions-marketplace-news'
 languageCode = 'en-us'
 title = 'GitHub Actions Marketplace News'
 theme = 'ananke'
