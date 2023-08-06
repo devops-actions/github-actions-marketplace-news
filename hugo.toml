@@ -17,6 +17,7 @@ sectionPagesMenu = 'main'
 [params]
   description = "Updates from the GitHub Actions Marketplace"
   show_reading_time = "true" 
+  recent_posts_number = 9
   [[params.ananke_socials]]
     name = "linkedin"
     url = "https://linkedin.com/in/bosrob"
