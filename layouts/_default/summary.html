@@ -2,10 +2,11 @@
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     {{ if .Date }} -->
       <!--div class="f6" -->
+      <span class="f6 db">
         {{ .Date | time.Format (default "January 2, 2006" .Site.Params.date_format) }}
+      </span>
       <!--/div-->
-    {{ end }} 
-    <span class="f6 db">{{ . }}</span>{{end}}
+    {{ end }}     
     <h1 class="f3 near-black">
       <a href="{{ .RelPermalink }}" class="link black dim">
         {{ .Title }}
