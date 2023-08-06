@@ -1,6 +1,6 @@
 ---
 title: "Init"
-date: 2023-07-309T10:58:08-04:00
+date: 2023-07-309T10:58:08
 draft: false
 tags: 
 - first
