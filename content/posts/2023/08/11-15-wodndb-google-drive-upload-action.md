@@ -7,7 +7,7 @@ tags:
 draft: false
 repo: wodndb/google-drive-upload-action
 marketplace: https://github.com/marketplace/actions/google-drive-file-uploader
-version: v1.2.3
+version: "v1.2.3"
 dependentsNumber: 0
 ---
 
