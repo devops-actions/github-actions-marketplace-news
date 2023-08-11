@@ -8,7 +8,7 @@ draft: false
 repo: kuruk-mm/unity-return-license
 marketplace: https://github.com/marketplace/actions/unity-return-license-kuruk-mod
 version: 0.1
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

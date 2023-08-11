@@ -8,7 +8,7 @@ draft: false
 repo: wodndb/google-drive-upload-action
 marketplace: https://github.com/marketplace/actions/google-drive-file-uploader
 version: v1.2.2
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

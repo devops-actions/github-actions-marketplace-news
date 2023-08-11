@@ -8,7 +8,7 @@ draft: false
 repo: nilsonneto/sql_script_splitter
 marketplace: https://github.com/marketplace/actions/sql-script-splitter-action
 version: v1.3.1
-dependentsNumber: ?
+dependentsNumber: '?'
 ---
 
 

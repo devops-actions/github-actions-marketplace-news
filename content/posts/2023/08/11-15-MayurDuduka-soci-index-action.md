@@ -8,7 +8,7 @@ draft: false
 repo: MayurDuduka/soci-index-action
 marketplace: https://github.com/marketplace/actions/create-soci-index
 version: v1.0
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

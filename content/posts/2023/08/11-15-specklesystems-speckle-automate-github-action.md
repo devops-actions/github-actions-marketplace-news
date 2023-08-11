@@ -8,7 +8,7 @@ draft: false
 repo: specklesystems/speckle-automate-github-action
 marketplace: https://github.com/marketplace/actions/speckle-automate-function-version-publisher
 version: 0.4.0
-dependentsNumber: ?
+dependentsNumber: '?'
 ---
 
 

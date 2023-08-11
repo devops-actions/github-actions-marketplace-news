@@ -8,7 +8,7 @@ draft: false
 repo: rkhaslarov/codeowners-validator-action
 marketplace: https://github.com/marketplace/actions/code-owners-validator
 version: v1.0.0
-dependentsNumber: ?
+dependentsNumber: '?'
 ---
 
 

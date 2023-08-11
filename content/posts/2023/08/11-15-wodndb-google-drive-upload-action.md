@@ -10,7 +10,6 @@ marketplace: https://github.com/marketplace/actions/google-drive-file-uploader
 dependentsNumber: 0
 ---
 
-
 Version updated for **wodndb/google-drive-upload-action** to version **v1.2.3**.
 - This publisher is shown verified by GitHub.
 - This action is used across all versions by ? repositories.
