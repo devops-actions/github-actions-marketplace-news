@@ -1,5 +1,5 @@
 ---
-title: Arazutech: Python License Check
+title: Arazutech Python License Check
 date: 2023-08-12 10:54:56 +00:00
 tags:
   - arazutech
