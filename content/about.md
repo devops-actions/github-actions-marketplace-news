@@ -11,7 +11,7 @@ Read more on this research on [devopsjournal.io](https://devopsjournal.io/blog/2
 You can check the latest run of the marketplace composition [here](https://github.com/rajbos/actions-marketplace-checks/actions/workflows/report.yml), where you can find the latest report in the summary.
 
 # Examples from the scan on 12-08-2023:
-``` mermaid
+```mermaid
 flowchart LR
   A[19993 actions]-->B[18229 action.yml - 91.2%]
   A-->C[1189 action.yaml - 5.9%]
@@ -21,7 +21,7 @@ flowchart LR
 
 ----
 
-``` mermaid
+```mermaid
 flowchart LR
   A[19993 Actions]-->B[8995 Node based]
   A-->C[6592 Docker based]
