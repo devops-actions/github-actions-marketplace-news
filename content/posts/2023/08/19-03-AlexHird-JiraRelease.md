@@ -1,5 +1,5 @@
 ---
-title: @ahirdman/Create JIRA Release
+title: ahirdman/Create JIRA Release
 date: 2023-08-19 03:00:43 +00:00
 tags:
   - AlexHird
