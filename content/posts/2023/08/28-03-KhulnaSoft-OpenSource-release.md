@@ -1,5 +1,5 @@
 ---
-title: @khulnasoft-opensource/release
+title: khulnasoft-opensource/release
 date: 2023-08-28 03:10:07 +00:00
 tags:
   - KhulnaSoft-OpenSource
