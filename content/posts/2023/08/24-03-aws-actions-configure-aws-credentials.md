@@ -1,5 +1,5 @@
 ---
-title: 'Configure AWS Credentials' Action for GitHub Actions
+title: Configure AWS Credentials Action for GitHub Actions
 date: 2023-08-24 03:03:18 +00:00
 tags:
   - aws-actions
