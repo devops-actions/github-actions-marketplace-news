@@ -1,0 +1,28 @@
+---
+title: actions-cfn-lint
+date: 2023-09-12 02:57:03 +00:00
+tags:
+  - shogo82148
+  - GitHub Actions
+draft: false
+repo: shogo82148/actions-cfn-lint
+marketplace: https://github.com/marketplace/actions/actions-cfn-lint
+version: v1.80.0
+dependentsNumber: 22
+---
+
+
+Version updated for **shogo82148/actions-cfn-lint** to version **v1.80.0**.
+- This publisher is shown as 'verified' by GitHub.
+- This action is used across all versions by **22** repositories.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/actions-cfn-lint) to find the latest changes.
+
+## Release notes
+
+## What's Changed
+* Bump shogo82148/actions-github-app-token from 0 to 1 by @dependabot in https://github.com/shogo82148/actions-cfn-lint/pull/478
+* bump cfn-lint v0.79.10 by @shogo82148-slim in https://github.com/shogo82148/actions-cfn-lint/pull/479
+
+
+**Full Changelog**: https://github.com/shogo82148/actions-cfn-lint/compare/v1.79.0...v1.80.0
