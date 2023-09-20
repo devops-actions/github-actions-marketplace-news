@@ -8,7 +8,7 @@ draft: false
 repo: anbazhagan45/update-property-value
 marketplace: https://github.com/marketplace/actions/update-property-value
 version: 1.0.1
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

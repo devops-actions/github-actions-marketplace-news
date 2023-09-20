@@ -8,7 +8,7 @@ draft: false
 repo: KyMidd/ActionJiraCommitValidate
 marketplace: https://github.com/marketplace/actions/check-commits-for-jira
 version: v1.0.2
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

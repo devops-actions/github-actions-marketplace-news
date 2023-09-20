@@ -8,7 +8,7 @@ draft: false
 repo: snakka-hv/action-custom-build-number
 marketplace: https://github.com/marketplace/actions/build-number-maintainer
 version: kitten-v1.0.0
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

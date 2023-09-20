@@ -8,7 +8,7 @@ draft: false
 repo: flavioheleno/watchr-action
 marketplace: https://github.com/marketplace/actions/watchr-action-automated-monitoring
 version: v0.3.0
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

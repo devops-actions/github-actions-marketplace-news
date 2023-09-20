@@ -8,7 +8,7 @@ draft: false
 repo: 0kenx/ChatGPT-CodeReview
 marketplace: https://github.com/marketplace/actions/gptcodereviewer
 version: v0.1.0
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

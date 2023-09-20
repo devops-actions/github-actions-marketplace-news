@@ -8,7 +8,7 @@ draft: false
 repo: norschel/GitHubActions.HyperV
 marketplace: https://github.com/marketplace/actions/norschel-xpirit-hyper-v-action
 version: v1.1.0
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 
