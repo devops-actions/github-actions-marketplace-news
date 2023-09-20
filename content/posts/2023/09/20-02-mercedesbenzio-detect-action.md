@@ -8,7 +8,7 @@ draft: false
 repo: mercedesbenzio/detect-action
 marketplace: https://github.com/marketplace/actions/synopsys-detect-scan-action
 version: v1.4.1
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

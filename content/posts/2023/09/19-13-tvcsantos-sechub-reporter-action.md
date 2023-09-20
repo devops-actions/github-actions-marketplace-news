@@ -8,7 +8,7 @@ draft: false
 repo: tvcsantos/sechub-reporter-action
 marketplace: https://github.com/marketplace/actions/sechub-reporter
 version: v2.0.0
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

@@ -8,7 +8,7 @@ draft: false
 repo: apendo-c8/tag-bpmn-models
 marketplace: https://github.com/marketplace/actions/tag-bpmn-models
 version: v1
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

@@ -8,7 +8,7 @@ draft: false
 repo: rokoucha/reviewdog-action-prettier
 marketplace: https://github.com/marketplace/actions/run-prettier-with-reviewdog-forked
 version: v0.1.1
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

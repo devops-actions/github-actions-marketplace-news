@@ -8,7 +8,7 @@ draft: false
 repo: JaSiLez/smtp-notifier
 marketplace: https://github.com/marketplace/actions/smtp-notifier
 version: v1.1.2
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

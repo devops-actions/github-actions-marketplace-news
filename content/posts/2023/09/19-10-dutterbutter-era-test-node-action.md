@@ -8,7 +8,7 @@ draft: false
 repo: dutterbutter/era-test-node-action
 marketplace: https://github.com/marketplace/actions/era-test-node-action
 version: v0.1.1
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 

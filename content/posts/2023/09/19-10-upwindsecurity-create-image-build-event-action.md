@@ -8,7 +8,7 @@ draft: false
 repo: upwindsecurity/create-image-build-event-action
 marketplace: https://github.com/marketplace/actions/create-image-build-event-action
 version: v1
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 
