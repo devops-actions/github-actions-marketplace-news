@@ -8,7 +8,7 @@ draft: false
 repo: allenheltondev/api-spec-to-api-destinations
 marketplace: https://github.com/marketplace/actions/openapi-to-eventbridge-api-destinations
 version: v1
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 
