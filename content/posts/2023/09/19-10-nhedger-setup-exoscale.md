@@ -8,7 +8,7 @@ draft: false
 repo: nhedger/setup-exoscale
 marketplace: https://github.com/marketplace/actions/setup-exoscale
 version: v3.0.0
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 
