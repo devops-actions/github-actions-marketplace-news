@@ -8,7 +8,7 @@ draft: false
 repo: Vendetta8247/github-action-slack-notify-build-jira
 marketplace: https://github.com/marketplace/actions/slack-notify-build-jira
 version: v1.3.2
-dependentsNumber: ?
+dependentsNumber: "?"
 ---
 
 
