@@ -1,0 +1,26 @@
+---
+title: Purge deprecated workflow runs
+date: 2023-11-07 19:03:48 +00:00
+tags:
+  - otto-de
+  - GitHub Actions
+draft: false
+repo: otto-de/purge-deprecated-workflow-runs
+marketplace: https://github.com/marketplace/actions/purge-deprecated-workflow-runs
+version: v2.0.3
+dependentsNumber: "46"
+---
+
+
+Version updated for **otto-de/purge-deprecated-workflow-runs** to version **v2.0.3**.
+- This action is used across all versions by **46** repositories.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/purge-deprecated-workflow-runs) to find the latest changes.
+
+## Release notes
+
+## What's Changed
+* Bump undici from 5.25.4 to 5.27.2 by @dependabot in https://github.com/otto-de/purge-deprecated-workflow-runs/pull/27
+
+
+**Full Changelog**: https://github.com/otto-de/purge-deprecated-workflow-runs/compare/v2.0.2...v2.0.3
