@@ -1,0 +1,125 @@
+---
+title: Get Azure App Configuration
+date: 2023-11-25 11:12:08 +00:00
+tags:
+  - flcdrg
+  - GitHub Actions
+draft: false
+repo: flcdrg/get-azure-app-configuration-action
+marketplace: https://github.com/marketplace/actions/get-azure-app-configuration
+version: v4.0.0
+dependentsNumber: "3"
+---
+
+
+Version updated for **flcdrg/get-azure-app-configuration-action** to version **v4.0.0**.
+- This action is used across all versions by **3** repositories.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/get-azure-app-configuration) to find the latest changes.
+
+## Release notes
+
+## Changes
+
+- Use Node 20 @flcdrg (#567)
+- Bump @types/node from 16.18.25 to 20.10.0 @dependabot (#565)
+- Bump peter-evans/create-pull-request from 4.2.3 to 5.0.2 @dependabot (#470)
+- Bump actions/setup-node from 3.8.1 to 4.0.0 @dependabot (#548)
+- Bump actions/checkout from 3 to 4 @dependabot (#521)
+- Update dist @flcdrg (#566)
+- Bump eslint from 8.53.0 to 8.54.0 @dependabot (#560)
+- Bump @azure/identity from 3.3.2 to 3.4.1 @dependabot (#558)
+- Bump @azure/app-configuration from 1.4.1 to 1.5.0 @dependabot (#556)
+- Bump eslint from 8.52.0 to 8.53.0 @dependabot (#553)
+- Bump eslint-plugin-jest from 27.4.3 to 27.6.0 @dependabot (#551)
+- Bump eslint-plugin-jest from 27.4.2 to 27.4.3 @dependabot (#547)
+- Bump eslint from 8.51.0 to 8.52.0 @dependabot (#546)
+- Bump @vercel/ncc from 0.38.0 to 0.38.1 @dependabot (#545)
+- Bump @azure/identity from 3.3.1 to 3.3.2 @dependabot (#543)
+- Bump @babel/traverse from 7.14.7 to 7.23.2 @dependabot (#542)
+- Bump @azure/identity from 3.3.0 to 3.3.1 @dependabot (#539)
+- Bump eslint from 8.50.0 to 8.51.0 @dependabot (#537)
+- Bump eslint-plugin-jest from 27.4.0 to 27.4.2 @dependabot (#535)
+- Bump eslint from 8.49.0 to 8.50.0 @dependabot (#530)
+- Bump eslint-plugin-jest from 27.2.3 to 27.4.0 @dependabot (#528)
+- Bump @actions/core from 1.10.0 to 1.10.1 @dependabot (#525)
+- Bump eslint from 8.48.0 to 8.49.0 @dependabot (#524)
+- Bump @vercel/ncc from 0.36.1 to 0.38.0 @dependabot (#522)
+- Bump eslint from 8.47.0 to 8.48.0 @dependabot (#515)
+- Bump actions/setup-node from 3.8.0 to 3.8.1 @dependabot (#509)
+- Bump @azure/identity from 3.2.4 to 3.3.0 @dependabot (#507)
+- Bump actions/setup-node from 3.7.0 to 3.8.0 @dependabot (#506)
+- Bump eslint from 8.46.0 to 8.47.0 @dependabot (#503)
+- Bump eslint from 8.45.0 to 8.46.0 @dependabot (#497)
+- Bump @azure/identity from 3.2.3 to 3.2.4 @dependabot (#495)
+- Bump word-wrap from 1.2.3 to 1.2.4 @dependabot (#493)
+- Bump eslint from 8.44.0 to 8.45.0 @dependabot (#490)
+- Bump eslint-plugin-github from 4.8.0 to 4.9.0 @dependabot (#488)
+- Bump eslint-plugin-jest from 27.2.2 to 27.2.3 @dependabot (#487)
+- Bump @typescript-eslint/parser from 5.61.0 to 5.62.0 @dependabot (#486)
+- Bump tough-cookie from 4.0.0 to 4.1.3 @dependabot (#484)
+- Bump actions/setup-node from 3.6.0 to 3.7.0 @dependabot (#482)
+- Bump eslint from 8.43.0 to 8.44.0 @dependabot (#480)
+- Bump @typescript-eslint/parser from 5.60.1 to 5.61.0 @dependabot (#478)
+- Bump dependabot/fetch-metadata from 1.5.1 to 1.6.0 @dependabot (#477)
+- Bump @typescript-eslint/parser from 5.60.0 to 5.60.1 @dependabot (#475)
+- Bump @azure/identity from 3.2.2 to 3.2.3 @dependabot (#474)
+- Bump @typescript-eslint/parser from 5.59.11 to 5.60.0 @dependabot (#473)
+- Bump eslint-plugin-jest from 27.2.1 to 27.2.2 @dependabot (#472)
+- Bump @typescript-eslint/parser from 5.59.9 to 5.59.11 @dependabot (#467)
+- Bump eslint from 8.42.0 to 8.43.0 @dependabot (#471)
+- Bump eslint from 8.41.0 to 8.42.0 @dependabot (#466)
+- Bump @typescript-eslint/parser from 5.59.8 to 5.59.9 @dependabot (#465)
+- Bump eslint-plugin-github from 4.7.0 to 4.8.0 @dependabot (#464)
+- Bump @typescript-eslint/parser from 5.59.7 to 5.59.8 @dependabot (#463)
+- Bump dependabot/fetch-metadata from 1.4.0 to 1.5.1 @dependabot (#460)
+- Bump nerdbank-gitversioning from 3.6.132 to 3.6.133 @dependabot (#459)
+- Bump @typescript-eslint/parser from 5.59.6 to 5.59.7 @dependabot (#457)
+- Bump eslint from 8.40.0 to 8.41.0 @dependabot (#455)
+- Bump @azure/identity from 3.2.1 to 3.2.2 @dependabot (#452)
+- Bump @typescript-eslint/parser from 5.59.5 to 5.59.6 @dependabot (#451)
+- Bump nerdbank-gitversioning from 3.6.128 to 3.6.132 @dependabot (#449)
+- Bump @azure/identity from 3.2.0 to 3.2.1 @dependabot (#447)
+- Bump @azure/identity from 3.1.4 to 3.2.0 @dependabot (#445)
+- Bump @typescript-eslint/parser from 5.59.2 to 5.59.5 @dependabot (#443)
+- Bump eslint from 8.39.0 to 8.40.0 @dependabot (#441)
+- Bump nerdbank-gitversioning from 3.5.119 to 3.6.128 @dependabot (#439)
+- Bump @typescript-eslint/parser from 5.59.1 to 5.59.2 @dependabot (#438)
+- Bump @types/node from 16.18.24 to 16.18.25 @dependabot (#437)
+- Bump @typescript-eslint/parser from 5.59.0 to 5.59.1 @dependabot (#435)
+- Bump @azure/app-configuration from 1.3.1 to 1.4.1 @dependabot (#436)
+- Bump prettier from 2.8.7 to 2.8.8 @dependabot (#434)
+- Bump eslint from 8.38.0 to 8.39.0 @dependabot (#433)
+- Bump @types/node from 16.18.23 to 16.18.24 @dependabot (#432)
+- Bump dependabot/fetch-metadata from 1.3.6 to 1.4.0 @dependabot (#431)
+- Bump @typescript-eslint/parser from 5.58.0 to 5.59.0 @dependabot (#430)
+- Bump @azure/identity from 3.1.3 to 3.1.4 @dependabot (#429)
+- Bump eslint from 8.37.0 to 8.38.0 @dependabot (#428)
+- Bump @typescript-eslint/parser from 5.57.1 to 5.58.0 @dependabot (#427)
+- Bump @typescript-eslint/parser from 5.57.0 to 5.57.1 @dependabot (#425)
+- Bump @types/node from 16.18.22 to 16.18.23 @dependabot (#424)
+- Bump eslint from 8.36.0 to 8.37.0 @dependabot (#423)
+- Bump @types/node from 16.18.21 to 16.18.22 @dependabot (#422)
+- Bump @types/node from 16.18.19 to 16.18.21 @dependabot (#421)
+- Bump @typescript-eslint/parser from 5.56.0 to 5.57.0 @dependabot (#420)
+- Bump prettier from 2.8.6 to 2.8.7 @dependabot (#419)
+- Bump eslint-plugin-github from 4.6.1 to 4.7.0 @dependabot (#418)
+- Bump @types/node from 16.18.18 to 16.18.19 @dependabot (#417)
+- Bump prettier from 2.8.5 to 2.8.6 @dependabot (#416)
+- Bump prettier from 2.8.4 to 2.8.5 @dependabot (#414)
+- Bump @typescript-eslint/parser from 5.55.0 to 5.56.0 @dependabot (#415)
+- Bump @types/node from 16.18.16 to 16.18.18 @dependabot (#413)
+- Bump @actions/io from 1.1.2 to 1.1.3 @dependabot (#411)
+- Bump @azure/keyvault-secrets from 4.6.0 to 4.7.0 @dependabot (#410)
+- Bump @types/node from 16.18.15 to 16.18.16 @dependabot (#409)
+- Bump eslint from 8.35.0 to 8.36.0 @dependabot (#408)
+- Bump @types/node from 16.18.14 to 16.18.15 @dependabot (#407)
+- Bump @typescript-eslint/parser from 5.54.1 to 5.55.0 @dependabot (#406)
+- Bump @typescript-eslint/parser from 5.54.0 to 5.54.1 @dependabot (#405)
+- Bump typescript from 4.9.4 to 4.9.5 @dependabot (#403)
+- Bump @vercel/ncc from 0.36.0 to 0.36.1 @dependabot (#404)
+- Bump eslint-plugin-github from 4.6.0 to 4.6.1 @dependabot (#402)
+- change sc @flcdrg (#400)
+- Default to returning settings with no label @flcdrg (#401)
+- Set up CI with Azure Pipelines @flcdrg (#399)
+
