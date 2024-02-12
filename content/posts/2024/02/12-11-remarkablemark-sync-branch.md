@@ -1,0 +1,27 @@
+---
+title: sync-branch-github-action
+date: 2024-02-12 11:24:10 +00:00
+tags:
+  - remarkablemark
+  - GitHub Actions
+draft: false
+repo: remarkablemark/sync-branch
+marketplace: https://github.com/marketplace/actions/sync-branch-github-action
+version: v1.0.1
+dependentsNumber: "1"
+---
+
+
+Version updated for **remarkablemark/sync-branch** to version **v1.0.1**.
+- This action is used across all versions by **1** repositories.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/sync-branch-github-action) to find the latest changes.
+
+## Release notes
+
+## [1.0.1](https://github.com/remarkablemark/sync-branch/compare/v1.0.0...v1.0.1) (2024-02-12)
+
+
+### Bug Fixes
+
+* **action:** checkout repository ([8307805](https://github.com/remarkablemark/sync-branch/commit/83078057af7d53e81f9b04b6212638162086ed8e))
