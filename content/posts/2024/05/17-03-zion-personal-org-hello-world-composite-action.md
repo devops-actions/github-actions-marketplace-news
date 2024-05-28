@@ -1,5 +1,5 @@
 ---
-title: [zion] test hello world action greeting
+title: zion - test hello world action greeting
 date: 2024-05-17 03:33:21 +00:00
 tags:
   - zion-personal-org
