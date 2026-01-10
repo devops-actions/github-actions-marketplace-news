@@ -73,11 +73,17 @@ This issue will be automatically assigned to the GitHub Copilot Coding Agent for
         issue_url=$(gh issue create \
             --title "$issue_title" \
             --body "$issue_body" \
-            --label "bug,hugo-build-error" \
-            --assignee "Copilot" \
+            --label "bug,hugo-build-error" \     
             --repo "$REPO")
         
         echo "✅ Created issue: $issue_url"
+
+        # Assign the issue to GitHub Copilot Coding Agent
+        if gh issue edit "$(basename "$issue_url")" --add-assignee "@copilot" 2>/dev/null; then
+            echo "✅ Assigned to GitHub Copilot"
+        else
+            echo "⚠️  Could not assign to GitHub Copilot (continuing anyway)"
+        fi
         
         # Write to GitHub Actions step summary if running in GitHub Actions
         if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
