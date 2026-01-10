@@ -41,7 +41,6 @@ This script creates GitHub issues for each failed post that was removed during t
 - Includes clickable link to the problematic file (with line number)
 - Includes error message and location
 - Labels issues as `bug` and `hugo-build-error`
-- Attempts to assign to GitHub Copilot for automatic fixing
 
 **Usage:**
 ```bash
