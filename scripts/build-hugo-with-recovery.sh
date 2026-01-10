@@ -13,7 +13,7 @@ retry_count=0
 mkdir -p "$FAILED_FILES_DIR"
 
 # Clear previous log
-> "$FAILED_FILES_LOG"
+: > "$FAILED_FILES_LOG"
 
 echo "Starting Hugo build with recovery mechanism..."
 
@@ -22,7 +22,7 @@ while [ $retry_count -lt $MAX_RETRIES ]; do
     hugo --gc --minify --baseURL "$BASE_URL" 2>&1 | tee build.log
     build_exit_code=${PIPESTATUS[0]}
     
-    if [ $build_exit_code -eq 0 ]; then
+    if [ "$build_exit_code" -eq 0 ]; then
         echo "✅ Hugo build succeeded!"
         
         # Check if any files were moved and report
@@ -60,8 +60,10 @@ while [ $retry_count -lt $MAX_RETRIES ]; do
     # Extract line and column numbers
     line_col=$(echo "$error_line" | grep -oP '"\K[^"]+(?=")' | head -1 | cut -d':' -f2-3)
     
-    # Extract error message
-    error_msg=$(echo "$error_line" | sed 's/^Error: error building site: assemble: "[^"]*": //')
+    # Extract error message (using parameter expansion to avoid sed)
+    temp="${error_line#*: }"  # Remove everything before first colon
+    temp="${temp#*: }"  # Remove everything before second colon
+    error_msg="${temp#*\": }"  # Remove everything before quote and colon
     
     echo ""
     echo "⚠️  Build failed due to: $failed_file"
