@@ -2,3 +2,9 @@
 public/
 resources/
 .hugo_build.lock
+
+# Build recovery artifacts
+failed-posts-backup/
+failed-files.log
+build.log
+*.log
