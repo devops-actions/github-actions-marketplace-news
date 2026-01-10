@@ -7,3 +7,4 @@ resources/
 failed-posts-backup/
 failed-files.log
 build.log
+*.log
