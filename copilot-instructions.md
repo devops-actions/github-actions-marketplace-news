@@ -9,26 +9,31 @@ This document contains guidelines and best practices for maintaining this reposi
 **Always apply permissions at the lowest possible level:**
 
 1. **Job-level permissions** (preferred): Apply permissions only to the specific job that needs them
-2. **Workflow-level permissions** (only when multiple jobs need the same permissions)
+2. **Workflow-level permissions** (only when all jobs need the same permissions)
+
+**Best Practice:** Define all permissions at the job level unless every single job in the workflow needs the exact same permission. Use `permissions: {}` at workflow level to explicitly show no global permissions are granted.
 
 **Example:**
 ```yaml
-# Workflow-level: Only permissions needed by all jobs
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+# Workflow-level: Empty to enforce job-level permissions
+permissions: {}
 
 jobs:
   build:
-    # Job-level: Additional permissions for this specific job
+    # Job-level: Specific permissions for this job
     permissions:
       contents: read
       pages: write
       issues: write  # Only this job needs to create issues
+  
+  deploy:
+    # Job-level: Different permissions for deployment
+    permissions:
+      pages: write
+      id-token: write
 ```
 
-**Why:** This follows the principle of least privilege, reducing security risks if a job is compromised.
+**Why:** This follows the principle of least privilege, reducing security risks if a job is compromised. Each job only gets the exact permissions it needs.
 
 ## Hugo Build Error Handling
 
