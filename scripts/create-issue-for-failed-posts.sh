@@ -74,6 +74,7 @@ This issue will be automatically assigned to the GitHub Copilot Coding Agent for
             --title "$issue_title" \
             --body "$issue_body" \
             --label "bug,hugo-build-error" \
+            --assignee "github-copilot-coding-agent" \
             --repo "$REPO")
         
         echo "✅ Created issue: $issue_url"
@@ -88,15 +89,8 @@ This issue will be automatically assigned to the GitHub Copilot Coding Agent for
                 echo "- **Issue**: [$issue_title]($issue_url)"
                 echo ""
             } >> "$GITHUB_STEP_SUMMARY"
-        fi
-        
-        # Try to assign to copilot (if it fails, that's ok - the issue is still created)
-        if issue_number=$(echo "$issue_url" | grep -oP '/issues/\K\d+'); then
-            echo "Attempting to assign issue #$issue_number to GitHub Copilot..."
-            # This may fail if copilot can't be assigned directly, which is fine
-            gh issue edit "$issue_number" --add-assignee "@me" --repo "$REPO" 2>/dev/null || \
-                echo "Note: Could not auto-assign. Please assign manually to GitHub Copilot Coding Agent."
-        fi
+        fi       
+       
     else
         echo "⚠️  GitHub CLI (gh) not found. Cannot create issue automatically."
         echo "Issue details:"
