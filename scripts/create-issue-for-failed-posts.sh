@@ -74,7 +74,7 @@ This issue will be automatically assigned to the GitHub Copilot Coding Agent for
             --title "$issue_title" \
             --body "$issue_body" \
             --label "bug,hugo-build-error" \
-            --assignee "copilot-swe-agent" \
+            --assignee "Copilot" \
             --repo "$REPO")
         
         echo "✅ Created issue: $issue_url"
