@@ -79,6 +79,7 @@ This issue will be automatically assigned to the GitHub Copilot Coding Agent for
         echo "✅ Created issue: $issue_url"
 
         # Assign the issue to GitHub Copilot Coding Agent
+        # Seems like the user triggering this needs to have a Copilot license still, so needs to be done with a PAT
         if gh issue edit "$(basename "$issue_url")" --add-assignee "@copilot" 2>/dev/null; then
             echo "✅ Assigned to GitHub Copilot"
         else
