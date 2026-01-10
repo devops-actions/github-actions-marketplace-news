@@ -73,7 +73,7 @@ This issue will be automatically assigned to the GitHub Copilot Coding Agent for
         issue_url=$(gh issue create \
             --title "$issue_title" \
             --body "$issue_body" \
-            --label "bug,hugo-build-error" \     
+            --label "bug,hugo-build-error" \
             --repo "$REPO")
         
         echo "✅ Created issue: $issue_url"
