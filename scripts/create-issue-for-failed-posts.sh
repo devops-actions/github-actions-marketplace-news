@@ -57,10 +57,6 @@ The automated build process encountered this error and had to remove the file to
 
 Please review and fix the error in the file, then restore it to the correct location.
 
-### Assignment
-
-This issue will be automatically assigned to the GitHub Copilot Coding Agent for resolution.
-
 ---
 *This issue was automatically created by the build workflow.*"
 
@@ -74,7 +70,6 @@ This issue will be automatically assigned to the GitHub Copilot Coding Agent for
             --title "$issue_title" \
             --body "$issue_body" \
             --label "bug,hugo-build-error" \
-            --assignee "Copilot" \
             --repo "$REPO")
         
         echo "✅ Created issue: $issue_url"
