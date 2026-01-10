@@ -15,6 +15,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  issues: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -65,10 +66,24 @@ jobs:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
         run: |
-          hugo \
-            --gc \
-            --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
+          ./scripts/build-hugo-with-recovery.sh "${{ steps.pages.outputs.base_url }}/"
+        continue-on-error: true
+        id: hugo_build
+      
+      - name: Create issues for failed posts
+        if: always()
+        run: |
+          if [ -f failed-files.log ] && [ -s failed-files.log ]; then
+            ./scripts/create-issue-for-failed-posts.sh
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Check build status
+        if: steps.hugo_build.outcome == 'failure'
+        run: |
+          echo "❌ Hugo build failed even after removing problematic files"
+          exit 1
             
       - name: Upload artifact
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0

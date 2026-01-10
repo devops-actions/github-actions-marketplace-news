@@ -1,0 +1,5 @@
+Start building sites … 
+hugo v0.115.4-dc9524521270f81d1c038ebbb200f0cfa3427cc5+extended linux/amd64 BuildDate=2023-07-20T06:49:57Z VendorInfo=gohugoio
+
+Total in 1387 ms
+Error: error building site: assemble: "/home/runner/work/github-actions-marketplace-news/github-actions-marketplace-news/content/posts/2026/01/02-13-rvben-rumdl.md:78:23": shortcode has no name
