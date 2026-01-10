@@ -75,7 +75,7 @@ rumdl is a high-performance linter and formatter for Markdown files, built with 
   - Configuration discovery now works correctly with relative file paths
 
 - **Reflow: Preserve Hugo shortcodes as atomic elements**
-  - Hugo shortcodes (`{{< >}}` and `{{% %}}`) are no longer broken across lines during text reflow
+  - Hugo shortcodes (`{{</* */>}}` and `{{%/* */%}}`) are no longer broken across lines during text reflow
 
 
 ## Downloads
