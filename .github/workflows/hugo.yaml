@@ -15,7 +15,6 @@ permissions:
   contents: read
   pages: write
   id-token: write
-  issues: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -32,6 +31,10 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      issues: write
     outputs:
       build_had_failures: ${{ steps.hugo_build.outputs.build_had_failures }}
     env:
@@ -98,6 +101,14 @@ jobs:
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Upload failed files log
+        if: always() && steps.hugo_build.outputs.build_had_failures == 'true'
+        uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5 # v3.2.1
+        with:
+          name: failed-files-log
+          path: failed-files.log
+          retention-days: 30
             
       - name: Upload artifact
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0

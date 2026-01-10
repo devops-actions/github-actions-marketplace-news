@@ -78,6 +78,18 @@ This issue will be automatically assigned to the GitHub Copilot Coding Agent for
         
         echo "✅ Created issue: $issue_url"
         
+        # Write to GitHub Actions step summary if running in GitHub Actions
+        if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
+            {
+                echo "### 🐛 Issue Created for Failed Post"
+                echo ""
+                echo "- **File**: \`$file_path\`"
+                echo "- **Error**: \`$error_msg\`"
+                echo "- **Issue**: [$issue_title]($issue_url)"
+                echo ""
+            } >> "$GITHUB_STEP_SUMMARY"
+        fi
+        
         # Try to assign to copilot (if it fails, that's ok - the issue is still created)
         if issue_number=$(echo "$issue_url" | grep -oP '/issues/\K\d+'); then
             echo "Attempting to assign issue #$issue_number to GitHub Copilot..."
