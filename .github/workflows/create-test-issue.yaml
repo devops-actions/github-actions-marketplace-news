@@ -1,0 +1,45 @@
+# Manual workflow to create a test issue for GitHub Copilot
+# This workflow uses the same setup as the create-issue-for-failed-posts.sh script
+# to create a test issue that can be assigned to Copilot for testing purposes.
+#
+# Usage: Manually trigger from the Actions tab
+name: Create Test Issue for Copilot
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Permissions needed for issue creation
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  create-test-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
+        with:
+          egress-policy: audit
+
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          submodules: recursive
+
+      - name: Create test failed-files.log
+        run: |
+          cat > failed-files.log << 'EOF'
+          content/posts/2024/01/test-post.md|15:1|Error: Invalid front matter format
+          EOF
+          
+          echo "Created test failed-files.log:"
+          cat failed-files.log
+
+      - name: Create test issue using existing script
+        run: |
+          chmod +x ./scripts/create-issue-for-failed-posts.sh
+          ./scripts/create-issue-for-failed-posts.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.ISSUE_TOKEN }}
