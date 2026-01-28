@@ -1,3 +1,8 @@
+# Manual workflow to create a test issue for GitHub Copilot
+# This workflow uses the same setup as the create-issue-for-failed-posts.sh script
+# to create a test issue that can be assigned to Copilot for testing purposes.
+#
+# Usage: Manually trigger from the Actions tab
 name: Create Test Issue for Copilot
 
 on:
