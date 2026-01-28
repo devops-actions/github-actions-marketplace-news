@@ -1,31 +1,32 @@
 #!/bin/bash
 
-# Script to archive old blog posts to reduce deployment size
-# This script moves posts older than a specified number of months to an archive directory
-# The archived posts are excluded from the Hugo build, reducing the public/ folder size
+# Script to remove old blog posts to reduce deployment size
+# This script deletes posts older than a specified number of months
+# Old posts can be restored from git history if needed
 
 set -e
 
-ARCHIVE_DIR="content/archive"
 POSTS_DIR="content/posts"
-ARCHIVE_MONTHS="${ARCHIVE_MONTHS:-12}"  # Default to archiving posts older than 12 months
+ARCHIVE_MONTHS="${ARCHIVE_MONTHS:-12}"  # Default to removing posts older than 12 months
 
-# Calculate the cutoff date (N months ago)
-CUTOFF_DATE=$(date -d "$ARCHIVE_MONTHS months ago" +%Y-%m-%d)
-CUTOFF_YEAR=$(date -d "$ARCHIVE_MONTHS months ago" +%Y)
-CUTOFF_MONTH=$(date -d "$ARCHIVE_MONTHS months ago" +%m)
+# Validate ARCHIVE_MONTHS is a positive integer
+if ! [[ "$ARCHIVE_MONTHS" =~ ^[0-9]+$ ]] || [ "$ARCHIVE_MONTHS" -lt 1 ]; then
+    echo "❌ Error: ARCHIVE_MONTHS must be a positive integer (got: '$ARCHIVE_MONTHS')"
+    exit 1
+fi
+
+# Calculate the cutoff date (N months ago) using Python for portability
+CUTOFF_DATE=$(python3 -c "from datetime import datetime, timedelta; print((datetime.now() - timedelta(days=30*$ARCHIVE_MONTHS)).strftime('%Y-%m-%d'))")
+CUTOFF_YEAR=$(echo "$CUTOFF_DATE" | cut -d'-' -f1)
+CUTOFF_MONTH=$(echo "$CUTOFF_DATE" | cut -d'-' -f2)
 
 echo "Archive script starting..."
-echo "Cutoff date: $CUTOFF_DATE (archiving posts older than this)"
+echo "Cutoff date: $CUTOFF_DATE (removing posts older than this)"
 echo "Posts directory: $POSTS_DIR"
-echo "Archive directory: $ARCHIVE_DIR"
 echo ""
 
-# Create archive directory if it doesn't exist
-mkdir -p "$ARCHIVE_DIR"
-
-# Counter for archived posts
-archived_count=0
+# Counter for removed posts
+removed_count=0
 
 # Find all year directories in posts
 for year_dir in "$POSTS_DIR"/*; do
@@ -42,24 +43,15 @@ for year_dir in "$POSTS_DIR"/*; do
     
     # Check if entire year is older than cutoff
     if [ "$year" -lt "$CUTOFF_YEAR" ]; then
-        echo "📦 Archiving entire year: $year"
+        echo "📦 Removing entire year: $year"
         
-        # Create year directory in archive
-        mkdir -p "$ARCHIVE_DIR/$year"
+        # Count posts before removing
+        post_count=$(find "$year_dir" -type f -name "*.md" 2>/dev/null | wc -l)
+        removed_count=$((removed_count + post_count))
         
-        # Move all month directories from this year
-        for month_dir in "$year_dir"/*; do
-            if [ -d "$month_dir" ]; then
-                month=$(basename "$month_dir")
-                mv "$month_dir" "$ARCHIVE_DIR/$year/"
-                post_count=$(find "$ARCHIVE_DIR/$year/$month" -type f -name "*.md" | wc -l)
-                archived_count=$((archived_count + post_count))
-                echo "  ✓ Moved $year/$month ($post_count posts)"
-            fi
-        done
-        
-        # Remove empty year directory
-        rmdir "$year_dir" 2>/dev/null || true
+        # Remove entire year directory
+        rm -rf "$year_dir"
+        echo "  ✓ Removed $year ($post_count posts)"
         
     elif [ "$year" -eq "$CUTOFF_YEAR" ]; then
         # For the cutoff year, check each month
@@ -77,47 +69,47 @@ for year_dir in "$POSTS_DIR"/*; do
                 continue
             fi
             
-            # Archive if month is before cutoff month
-            if [ "$month" -lt "$CUTOFF_MONTH" ]; then
-                echo "  📦 Archiving month: $year/$month"
+            # Remove leading zero for numeric comparison
+            month_num=$((10#$month))
+            cutoff_month_num=$((10#$CUTOFF_MONTH))
+            
+            # Remove if month is before cutoff month (posts from cutoff month and later are kept)
+            if [ "$month_num" -lt "$cutoff_month_num" ]; then
+                echo "  📦 Removing month: $year/$month"
                 
-                # Create year directory in archive if it doesn't exist
-                mkdir -p "$ARCHIVE_DIR/$year"
+                # Count posts before removing
+                post_count=$(find "$month_dir" -type f -name "*.md" 2>/dev/null | wc -l)
+                removed_count=$((removed_count + post_count))
                 
-                # Move the month directory
-                mv "$month_dir" "$ARCHIVE_DIR/$year/"
-                post_count=$(find "$ARCHIVE_DIR/$year/$month" -type f -name "*.md" | wc -l)
-                archived_count=$((archived_count + post_count))
-                echo "    ✓ Moved $year/$month ($post_count posts)"
+                # Remove the month directory
+                rm -rf "$month_dir"
+                echo "    ✓ Removed $year/$month ($post_count posts)"
             fi
         done
         
-        # Remove empty year directory if all months were archived
+        # Remove empty year directory if all months were removed
         rmdir "$year_dir" 2>/dev/null || true
     fi
 done
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "✅ Archive complete!"
-echo "   Total posts archived: $archived_count"
-echo "   Archived posts location: $ARCHIVE_DIR"
+if [ $removed_count -gt 0 ]; then
+    echo "✅ Removal complete!"
+    echo "   Total posts removed: $removed_count"
+else
+    echo "ℹ️  No posts were removed. All posts are within the $ARCHIVE_MONTHS month window."
+fi
 echo ""
 
 # Show current post counts
 current_count=$(find "$POSTS_DIR" -type f -name "*.md" 2>/dev/null | wc -l)
-archive_count=$(find "$ARCHIVE_DIR" -type f -name "*.md" 2>/dev/null | wc -l)
 
 echo "📊 Current statistics:"
 echo "   Active posts: $current_count"
-echo "   Archived posts: $archive_count"
-echo "   Total posts: $((current_count + archive_count))"
+echo "   Posts removed: $removed_count"
+echo ""
+echo "ℹ️  Note: Removed posts can be restored from git history if needed"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-if [ $archived_count -gt 0 ]; then
-    exit 0
-else
-    echo ""
-    echo "ℹ️  No posts were archived. All posts are within the $ARCHIVE_MONTHS month window."
-    exit 0
-fi
+exit 0

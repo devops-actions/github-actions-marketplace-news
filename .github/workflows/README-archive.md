@@ -1,6 +1,6 @@
 # Archive Old Posts Workflow
 
-This workflow automatically archives old blog posts to reduce the size of GitHub Pages deployments.
+This workflow automatically removes old blog posts to reduce the size of GitHub Pages deployments.
 
 ## Problem Statement
 
@@ -11,18 +11,19 @@ Over time, this repository accumulates thousands of blog posts, causing the `pub
 
 ## Solution
 
-The `archive-old-posts.yaml` workflow periodically moves old posts to an archive directory:
-- **Default behavior**: Archives posts older than 12 months
+The `archive-old-posts.yaml` workflow periodically removes old posts:
+- **Default behavior**: Removes posts older than 12 months
 - **Frequency**: Runs monthly on the 1st at 2am UTC
 - **Manual trigger**: Can be run manually with custom retention period
+- **Reversible**: Old posts can be restored from git history if needed
 
 ## How It Works
 
 1. The workflow runs the `scripts/archive-old-posts.sh` script
-2. Posts older than the retention period are moved from `content/posts/` to `content/archive/`
-3. The archive directory is excluded from Hugo builds (via `hugo.toml`)
-4. Changes are committed and pushed to the main branch
-5. The next deployment will be smaller and faster
+2. Posts older than the retention period are deleted from `content/posts/`
+3. Changes are committed and pushed to the main branch
+4. The next deployment will be smaller and faster
+5. Removed posts remain in git history and can be restored if needed
 
 ## Configuration
 
@@ -63,83 +64,101 @@ Examples:
 - **Reduced deployment size**: Smaller artifacts mean faster uploads and deployments
 - **Better performance**: Hugo builds faster with fewer files to process
 - **Automated**: Runs automatically without manual intervention
-- **Reversible**: Archived posts are preserved and can be restored if needed
-- **Transparent**: Git history shows exactly what was archived and when
+- **Reversible**: Posts are preserved in git history and can be restored if needed
+- **Transparent**: Git history shows exactly what was removed and when
+- **Clean**: No additional archive directories to maintain
 
-## Archive Location
+## Git History
 
-Archived posts are stored in:
-```
-content/archive/
-├── 2023/
-│   ├── 07/
-│   ├── 08/
-│   └── ...
-└── 2024/
-    ├── 01/
-    └── ...
-```
+Removed posts are preserved in git history:
+- Use `git log -- path/to/file.md` to see when a post was removed
+- Use `git show <commit>:path/to/file.md` to view a removed post
+- Use `git checkout <commit> -- path/to/file.md` to restore a removed post
 
-This directory:
-- Is excluded from Hugo builds (via `ignoreFiles` in `hugo.toml`)
-- Is excluded from version control (via `.gitignore`)
-- Preserves the original directory structure
-- Can be manually reviewed or restored if needed
+The workflow commits changes with a clear message indicating:
+- How many posts were removed
+- Why they were removed (age threshold)
+- That they can be restored from git history
 
 ## Monitoring
 
 The workflow provides detailed output:
-- Lists each year/month archived
-- Shows count of posts archived per month
+- Lists each year/month removed
+- Shows count of posts removed per month
 - Displays before/after statistics
 - Creates a job summary in GitHub Actions UI
 
-## Manual Restoration
+## Restoring Removed Posts
 
-If you need to restore archived posts:
+If you need to restore removed posts:
 
-1. Move posts from `content/archive/` back to `content/posts/`:
-   ```bash
-   # Restore a specific month
-   mv content/archive/2023/08 content/posts/2023/
-   
-   # Restore an entire year
-   mv content/archive/2023/* content/posts/2023/
-   ```
+### Find when a post was removed:
+```bash
+git log --all --full-history -- "content/posts/2023/08/01-00-example-post.md"
+```
 
-2. Commit and push the changes:
-   ```bash
-   git add content/posts/
-   git commit -m "Restore archived posts from 2023/08"
-   git push
-   ```
+### View a removed post:
+```bash
+git show <commit-hash>:content/posts/2023/08/01-00-example-post.md
+```
+
+### Restore a specific post:
+```bash
+# Find the commit before it was removed
+git log --all --full-history -- "content/posts/2023/08/01-00-example-post.md"
+
+# Restore the file from that commit
+git checkout <commit-before-removal> -- "content/posts/2023/08/01-00-example-post.md"
+
+# Commit and push
+git add content/posts/2023/08/01-00-example-post.md
+git commit -m "Restore post: 01-00-example-post.md"
+git push
+```
+
+### Restore an entire month or year:
+```bash
+# Restore all posts from August 2023
+git checkout <commit-before-removal> -- "content/posts/2023/08/"
+
+# Or restore all of 2023
+git checkout <commit-before-removal> -- "content/posts/2023/"
+
+# Commit and push
+git add content/posts/
+git commit -m "Restore posts from 2023/08"
+git push
+```
 
 ## Troubleshooting
 
-### No posts are being archived
+### No posts are being removed
 
 Check that:
 - Posts exist that are older than the retention period
-- The cutoff date calculation is correct for your timezone
+- The cutoff date calculation is correct
 - The post directory structure follows `YYYY/MM/` format
 
-### Build errors after archiving
+### Build errors after removing posts
 
-If Hugo fails to build after archiving:
+If Hugo fails to build after removal:
 1. Check the Hugo build logs for specific errors
 2. The `build-hugo-with-recovery.sh` script will automatically handle most errors
-3. Archived posts may have had syntax errors that are now resolved
+3. Removed posts may have had syntax errors that are now resolved
 
 ### Want to change retention period
 
 Simply run the workflow manually with a different value:
-- Larger value (e.g., 18 months): Fewer posts archived, larger deployments
-- Smaller value (e.g., 6 months): More posts archived, smaller deployments
+- Larger value (e.g., 18 months): Fewer posts removed, larger deployments
+- Smaller value (e.g., 6 months): More posts removed, smaller deployments
+
+### Need to restore a removed post
+
+See the "Restoring Removed Posts" section above for detailed git commands.
 
 ## Related Files
 
 - **Workflow**: `.github/workflows/archive-old-posts.yaml`
 - **Script**: `scripts/archive-old-posts.sh`
-- **Hugo Config**: `hugo.toml` (contains `ignoreFiles` configuration)
-- **Git Ignore**: `.gitignore` (excludes archive directory)
+- **Git Ignore**: `.gitignore` (excludes temporary archive directory if created during testing)
 - **Documentation**: `scripts/README.md` (script documentation)

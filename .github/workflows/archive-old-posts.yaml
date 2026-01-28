@@ -44,35 +44,44 @@ jobs:
       - name: Run archive script
         id: archive
         run: |
-          # Set archive months from input or default to 12
-          export ARCHIVE_MONTHS="${{ github.event.inputs.archive_months || '12' }}"
+          # Validate and set archive months from input or default to 12
+          MONTHS="${{ github.event.inputs.archive_months || '12' }}"
+          
+          # Validate it's a positive integer
+          if ! [[ "$MONTHS" =~ ^[0-9]+$ ]] || [ "$MONTHS" -lt 1 ]; then
+            echo "❌ Error: archive_months must be a positive integer"
+            exit 1
+          fi
+          
+          export ARCHIVE_MONTHS="$MONTHS"
           
           echo "Running archive script with ARCHIVE_MONTHS=$ARCHIVE_MONTHS"
           ./scripts/archive-old-posts.sh | tee archive-output.log
           
-          # Check if any files were archived
-          if git status --porcelain | grep -q "content/posts"; then
+          # Check if any files were removed
+          if git status --porcelain | grep -qE "^ D content/posts"; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
+            # Extract removed count with a default value if not found
+            removed_count=$(grep -oP "Total posts removed: \K[0-9]+" archive-output.log || echo "unknown")
+            echo "removed_count=$removed_count" >> $GITHUB_OUTPUT
           else
             echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "removed_count=0" >> $GITHUB_OUTPUT
           fi
 
       - name: Commit and push changes
         if: steps.archive.outputs.has_changes == 'true'
         run: |
-          # Add the moved files
+          # Stage the removed files
           git add content/posts/
           
-          # Count archived posts
-          archived_count=$(grep "Total posts archived:" archive-output.log | awk '{print $NF}')
+          # Get removed count
+          removed_count="${{ steps.archive.outputs.removed_count }}"
           
-          # Commit with a descriptive message
-          git commit -m "Archive old posts: moved $archived_count posts to archive
-
-          This automated commit archives blog posts older than ${{ github.event.inputs.archive_months || '12' }} months
-          to reduce deployment size and improve build performance.
-          
-          Archived content is stored in content/archive/ and excluded from builds."
+          # Create commit message
+          git commit -m "Archive old posts: removed $removed_count posts" \
+                     -m "This automated commit removes blog posts older than ${{ github.event.inputs.archive_months || '12' }} months to reduce deployment size and improve build performance." \
+                     -m "Removed content can be restored from git history if needed."
           
           # Push to main branch
           git push origin main
@@ -84,14 +93,16 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           
           if [ "${{ steps.archive.outputs.has_changes }}" == "true" ]; then
-            echo "✅ Posts were archived successfully!" >> $GITHUB_STEP_SUMMARY
+            echo "✅ Posts were removed successfully!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Removed: ${{ steps.archive.outputs.removed_count }} posts" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "### Archive Details" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
             cat archive-output.log >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
           else
-            echo "ℹ️ No posts needed archiving. All posts are within the retention window." >> $GITHUB_STEP_SUMMARY
+            echo "ℹ️ No posts needed removal. All posts are within the retention window." >> $GITHUB_STEP_SUMMARY
           fi
 
       - uses: rajbos-actions/slack@ed1309ab9862e57e9e583e51c7889486b9a00b0f # v2.0.0
