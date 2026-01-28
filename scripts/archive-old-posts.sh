@@ -15,8 +15,36 @@ if ! [[ "$ARCHIVE_MONTHS" =~ ^[0-9]+$ ]] || [ "$ARCHIVE_MONTHS" -lt 1 ]; then
     exit 1
 fi
 
-# Calculate the cutoff date (N months ago) using Python for portability
-CUTOFF_DATE=$(python3 -c "from datetime import datetime, timedelta; print((datetime.now() - timedelta(days=30*$ARCHIVE_MONTHS)).strftime('%Y-%m-%d'))")
+# Check if Python 3 is available (required for date calculations)
+if ! command -v python3 &> /dev/null; then
+    echo "❌ Error: python3 is required but not found in PATH"
+    echo "   Please install Python 3 to run this script"
+    exit 1
+fi
+
+# Check if posts directory exists
+if [ ! -d "$POSTS_DIR" ]; then
+    echo "❌ Error: Posts directory not found: $POSTS_DIR"
+    echo "   This script must be run from the repository root"
+    exit 1
+fi
+
+# Calculate the cutoff date (N months ago) using Python's dateutil for accuracy
+# Note: We use dateutil.relativedelta for accurate month calculations
+# (avoids the 30-day approximation which would be 360 days for 12 months instead of 365)
+CUTOFF_DATE=$(python3 -c "
+try:
+    from datetime import datetime
+    from dateutil.relativedelta import relativedelta
+    cutoff = datetime.now() - relativedelta(months=$ARCHIVE_MONTHS)
+    print(cutoff.strftime('%Y-%m-%d'))
+except ImportError:
+    # Fallback if dateutil is not available
+    from datetime import datetime, timedelta
+    cutoff = datetime.now() - timedelta(days=30*$ARCHIVE_MONTHS)
+    print(cutoff.strftime('%Y-%m-%d'))
+" 2>/dev/null)
+
 CUTOFF_YEAR=$(echo "$CUTOFF_DATE" | cut -d'-' -f1)
 CUTOFF_MONTH=$(echo "$CUTOFF_DATE" | cut -d'-' -f2)
 
@@ -69,7 +97,8 @@ for year_dir in "$POSTS_DIR"/*; do
                 continue
             fi
             
-            # Remove leading zero for numeric comparison
+            # Remove leading zero for numeric comparison (10# prefix prevents octal interpretation)
+            # This ensures "08" and "09" are treated as 8 and 9, not invalid octal numbers
             month_num=$((10#$month))
             cutoff_month_num=$((10#$CUTOFF_MONTH))
             

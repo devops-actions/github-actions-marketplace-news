@@ -32,6 +32,10 @@ ARCHIVE_MONTHS=6 ./scripts/archive-old-posts.sh
 **Environment Variables:**
 - `ARCHIVE_MONTHS`: Number of months to keep active (default: 12, must be positive integer)
 
+**Requirements:**
+- Python 3 (with dateutil package recommended for accurate date calculations)
+- Git (for restoring removed posts from history)
+
 **Output:**
 - Deletes posts from `content/posts/` older than the retention period
 - Prints statistics about removed and remaining posts

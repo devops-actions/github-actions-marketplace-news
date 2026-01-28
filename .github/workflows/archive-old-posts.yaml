@@ -105,7 +105,9 @@ jobs:
             echo "ℹ️ No posts needed removal. All posts are within the retention window." >> $GITHUB_STEP_SUMMARY
           fi
 
-      - uses: rajbos-actions/slack@ed1309ab9862e57e9e583e51c7889486b9a00b0f # v2.0.0
+      - name: Send Slack notification on failure
+        # Using rajbos-actions fork which is maintained by the repository owner
+        uses: rajbos-actions/slack@ed1309ab9862e57e9e583e51c7889486b9a00b0f # v2.0.0
         with: 
           status: ${{ job.status }}
         env:
