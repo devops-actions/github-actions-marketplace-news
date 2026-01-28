@@ -1,0 +1,102 @@
+# Workflow to periodically archive old blog posts
+# This reduces the size of deployments by moving older content to an archive
+name: Archive Old Posts
+
+on:
+  # Run monthly on the 1st at 2am UTC
+  schedule:
+    - cron: '0 2 1 * *'
+  
+  # Allow manual triggering
+  workflow_dispatch:
+    inputs:
+      archive_months:
+        description: 'Number of months to keep (older posts will be archived)'
+        required: false
+        default: '12'
+        type: string
+
+permissions: {}
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
+        with:
+          egress-policy: audit
+
+      - name: Checkout repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0  # Full history for proper commit
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run archive script
+        id: archive
+        run: |
+          # Set archive months from input or default to 12
+          export ARCHIVE_MONTHS="${{ github.event.inputs.archive_months || '12' }}"
+          
+          echo "Running archive script with ARCHIVE_MONTHS=$ARCHIVE_MONTHS"
+          ./scripts/archive-old-posts.sh | tee archive-output.log
+          
+          # Check if any files were archived
+          if git status --porcelain | grep -q "content/posts"; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.archive.outputs.has_changes == 'true'
+        run: |
+          # Add the moved files
+          git add content/posts/
+          
+          # Count archived posts
+          archived_count=$(grep "Total posts archived:" archive-output.log | awk '{print $NF}')
+          
+          # Commit with a descriptive message
+          git commit -m "Archive old posts: moved $archived_count posts to archive
+
+          This automated commit archives blog posts older than ${{ github.event.inputs.archive_months || '12' }} months
+          to reduce deployment size and improve build performance.
+          
+          Archived content is stored in content/archive/ and excluded from builds."
+          
+          # Push to main branch
+          git push origin main
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Archive Job Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.archive.outputs.has_changes }}" == "true" ]; then
+            echo "✅ Posts were archived successfully!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Archive Details" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            cat archive-output.log >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ No posts needed archiving. All posts are within the retention window." >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - uses: rajbos-actions/slack@ed1309ab9862e57e9e583e51c7889486b9a00b0f # v2.0.0
+        with: 
+          status: ${{ job.status }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()

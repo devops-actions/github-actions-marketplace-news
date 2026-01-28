@@ -5,6 +5,11 @@ theme = 'ananke'
 sectionPagesMenu = 'main'
 enableRobotsTXT = true
 Paginate = 9
+
+# Exclude archived content from builds to reduce deployment size
+ignoreFiles = [
+  "content/archive/.*"
+]
 [sitemap]
   changefreq = "monthly"
   priority = 0.5

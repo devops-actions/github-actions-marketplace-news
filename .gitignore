@@ -8,3 +8,6 @@ failed-posts-backup/
 failed-files.log
 build.log
 *.log
+
+# Archived content (excluded from deployment)
+content/archive/

@@ -4,6 +4,37 @@ This directory contains scripts that handle Hugo build errors gracefully, ensuri
 
 ## Scripts
 
+### `archive-old-posts.sh`
+
+This script archives old blog posts to reduce deployment size and improve build performance:
+
+**Features:**
+- Moves posts older than a configurable number of months to `content/archive/`
+- Default: archives posts older than 12 months
+- Preserves directory structure in the archive
+- Provides detailed logging and statistics
+- Safe to run multiple times (idempotent)
+
+**Exit Codes:**
+- `0`: Success (posts archived or no posts needed archiving)
+
+**Usage:**
+```bash
+# Use default (12 months)
+./scripts/archive-old-posts.sh
+
+# Custom retention period (6 months)
+ARCHIVE_MONTHS=6 ./scripts/archive-old-posts.sh
+```
+
+**Environment Variables:**
+- `ARCHIVE_MONTHS`: Number of months to keep active (default: 12)
+
+**Output:**
+- Moves old posts to `content/archive/`
+- Prints statistics about archived and active posts
+- Archived content is excluded from Hugo builds via `hugo.toml` configuration
+
 ### `build-hugo-with-recovery.sh`
 
 This script wraps the Hugo build process with automatic error recovery:
