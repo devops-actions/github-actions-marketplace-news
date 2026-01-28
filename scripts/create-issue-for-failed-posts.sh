@@ -10,15 +10,15 @@ GITHUB_SERVER_URL="${GITHUB_SERVER_URL:-https://github.com}"
 
 # Check for override token that takes precedence over GITHUB_TOKEN
 # This is useful for operations that require additional permissions (e.g., assigning to Copilot)
+# GitHub CLI automatically uses GITHUB_TOKEN env var, so we just need to set it if GH_TOKEN is provided
 if [ -n "${GH_TOKEN:-}" ]; then
     echo "Using GH_TOKEN for GitHub CLI authentication"
+    # Set GITHUB_TOKEN to GH_TOKEN value for gh CLI to use automatically
+    # gh CLI reads GITHUB_TOKEN by default without needing explicit login
     export GITHUB_TOKEN="$GH_TOKEN"
-    # Authenticate GitHub CLI with the override token
-    echo "$GH_TOKEN" | gh auth login --with-token
 elif [ -n "${GITHUB_TOKEN:-}" ]; then
     echo "Using GITHUB_TOKEN for GitHub CLI authentication"
-    # Authenticate GitHub CLI with the standard token
-    echo "$GITHUB_TOKEN" | gh auth login --with-token
+    # GITHUB_TOKEN is already set, gh CLI will use it automatically
 else
     echo "⚠️  No GitHub token found (GITHUB_TOKEN or GH_TOKEN). Some operations may fail."
 fi
