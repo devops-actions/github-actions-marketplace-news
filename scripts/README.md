@@ -4,6 +4,43 @@ This directory contains scripts that handle Hugo build errors gracefully, ensuri
 
 ## Scripts
 
+### `archive-old-posts.sh`
+
+This script removes old blog posts to reduce deployment size and improve build performance:
+
+**Features:**
+- Deletes posts older than a configurable number of months
+- Default: removes posts older than 12 months
+- Preserves directory structure for remaining posts
+- Provides detailed logging and statistics
+- Safe to run multiple times (idempotent)
+- Removed posts can be restored from git history if needed
+
+**Exit Codes:**
+- `0`: Success (posts removed or no posts needed removal)
+- `1`: Error (invalid ARCHIVE_MONTHS parameter)
+
+**Usage:**
+```bash
+# Use default (12 months)
+./scripts/archive-old-posts.sh
+
+# Custom retention period (6 months)
+ARCHIVE_MONTHS=6 ./scripts/archive-old-posts.sh
+```
+
+**Environment Variables:**
+- `ARCHIVE_MONTHS`: Number of months to keep active (default: 12, must be positive integer)
+
+**Requirements:**
+- Python 3 (with dateutil package recommended for accurate date calculations)
+- Git (for restoring removed posts from history)
+
+**Output:**
+- Deletes posts from `content/posts/` older than the retention period
+- Prints statistics about removed and remaining posts
+- Posts can be restored from git history using `git log` and `git checkout`
+
 ### `build-hugo-with-recovery.sh`
 
 This script wraps the Hugo build process with automatic error recovery:
