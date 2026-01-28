@@ -49,17 +49,18 @@ export GITHUB_TOKEN="your-token"
 export GITHUB_REPOSITORY="owner/repo"
 ./scripts/create-issue-for-failed-posts.sh
 
-# Or use GH_TOKEN to override GITHUB_TOKEN (useful for PAT with additional permissions)
-export GH_TOKEN="your-pat-token"
+# Or use ISSUE_TOKEN to override GITHUB_TOKEN (useful for PAT with additional permissions)
+export ISSUE_TOKEN="your-pat-token"
 export GITHUB_REPOSITORY="owner/repo"
 ./scripts/create-issue-for-failed-posts.sh
 ```
 
 **Requirements:**
 - GitHub CLI (`gh`) must be installed
-- `GITHUB_TOKEN` or `GH_TOKEN` environment variable with `issues: write` permission
-  - `GH_TOKEN` takes precedence over `GITHUB_TOKEN` if both are set
-  - Use `GH_TOKEN` with a PAT when additional permissions are needed (e.g., Copilot assignment)
+- `GITHUB_TOKEN` or `ISSUE_TOKEN` environment variable with `issues: write` permission
+  - `ISSUE_TOKEN` takes precedence over `GITHUB_TOKEN` if both are set
+  - When `ISSUE_TOKEN` is set, it will be used for ALL GitHub CLI operations in this script
+  - Use `ISSUE_TOKEN` (as a repository secret) with a PAT when additional permissions are needed (e.g., Copilot assignment)
 - `GITHUB_REPOSITORY` environment variable
 
 ## Workflow Integration

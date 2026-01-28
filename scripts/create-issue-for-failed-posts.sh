@@ -9,18 +9,19 @@ REPO="${GITHUB_REPOSITORY}"
 GITHUB_SERVER_URL="${GITHUB_SERVER_URL:-https://github.com}"
 
 # Check for override token that takes precedence over GITHUB_TOKEN
-# This is useful for operations that require additional permissions (e.g., assigning to Copilot)
-# GitHub CLI automatically uses GITHUB_TOKEN env var, so we just need to set it if GH_TOKEN is provided
-if [ -n "${GH_TOKEN:-}" ]; then
-    echo "Using GH_TOKEN for GitHub CLI authentication"
-    # Set GITHUB_TOKEN to GH_TOKEN value for gh CLI to use automatically
+# This is useful when operations require additional permissions beyond what GITHUB_TOKEN provides
+# (e.g., assigning to Copilot requires a PAT with appropriate scopes)
+# Note: When ISSUE_TOKEN is set, it will be used for ALL gh CLI operations in this script
+if [ -n "${ISSUE_TOKEN:-}" ]; then
+    echo "Using ISSUE_TOKEN for GitHub CLI authentication"
+    # Set GITHUB_TOKEN to ISSUE_TOKEN value for gh CLI to use automatically
     # gh CLI reads GITHUB_TOKEN by default without needing explicit login
-    export GITHUB_TOKEN="$GH_TOKEN"
+    export GITHUB_TOKEN="$ISSUE_TOKEN"
 elif [ -n "${GITHUB_TOKEN:-}" ]; then
     echo "Using GITHUB_TOKEN for GitHub CLI authentication"
     # GITHUB_TOKEN is already set, gh CLI will use it automatically
 else
-    echo "⚠️  No GitHub token found (GITHUB_TOKEN or GH_TOKEN). Some operations may fail."
+    echo "⚠️  No GitHub token found (GITHUB_TOKEN or ISSUE_TOKEN). Some operations may fail."
 fi
 
 if [ ! -f "$FAILED_FILES_LOG" ]; then

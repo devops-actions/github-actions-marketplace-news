@@ -99,6 +99,10 @@ jobs:
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: Use ISSUE_TOKEN repository secret to override GITHUB_TOKEN
+          # This is useful when additional permissions are needed (e.g., assigning to Copilot)
+          # Uncomment the line below and create a repository secret named ISSUE_TOKEN with a PAT
+          # ISSUE_TOKEN: ${{ secrets.ISSUE_TOKEN }}
       
       - name: Upload failed files log
         if: always() && steps.hugo_build.outputs.build_had_failures == 'true'
