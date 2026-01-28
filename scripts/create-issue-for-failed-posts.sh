@@ -8,6 +8,22 @@ FAILED_FILES_LOG="${1:-failed-files.log}"
 REPO="${GITHUB_REPOSITORY}"
 GITHUB_SERVER_URL="${GITHUB_SERVER_URL:-https://github.com}"
 
+# Check for override token that takes precedence over GITHUB_TOKEN
+# This is useful when operations require additional permissions beyond what GITHUB_TOKEN provides
+# (e.g., assigning to Copilot requires a PAT with appropriate scopes)
+# Note: When ISSUE_TOKEN is set, it will be used for ALL gh CLI operations in this script
+if [ -n "${ISSUE_TOKEN:-}" ]; then
+    echo "Using ISSUE_TOKEN for GitHub CLI authentication"
+    # Set GITHUB_TOKEN to ISSUE_TOKEN value for gh CLI to use automatically
+    # gh CLI reads GITHUB_TOKEN by default without needing explicit login
+    export GITHUB_TOKEN="$ISSUE_TOKEN"
+elif [ -n "${GITHUB_TOKEN:-}" ]; then
+    echo "Using GITHUB_TOKEN for GitHub CLI authentication"
+    # GITHUB_TOKEN is already set, gh CLI will use it automatically
+else
+    echo "⚠️  No GitHub token found (GITHUB_TOKEN or ISSUE_TOKEN). Some operations may fail."
+fi
+
 if [ ! -f "$FAILED_FILES_LOG" ]; then
     echo "No failed files log found. Exiting."
     exit 0
