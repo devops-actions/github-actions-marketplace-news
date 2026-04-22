@@ -36,7 +36,7 @@ jobs:
     outputs:
       build_had_failures: ${{ steps.hugo_build.outputs.build_had_failures }}
     env:
-      HUGO_VERSION: 0.115.4
+      HUGO_VERSION: 0.160.1
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@fe104658747b27e96e4f7e80cd0a94068e53901d # v2.16.1
