@@ -34,5 +34,8 @@ Paginate = 9
     name = "mastodon"
     url = "https://mstdn.social/@Rob_Bos"
     rel = "me noopener"
+[markup.goldmark.renderer]
+  unsafe = true
+
 [permalinks]
   posts = '/blog/:year/:month/:day/:title/'
