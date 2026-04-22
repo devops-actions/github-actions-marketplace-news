@@ -7,7 +7,7 @@
 set -e
 
 POSTS_DIR="content/posts"
-ARCHIVE_MONTHS="${ARCHIVE_MONTHS:-12}"  # Default to removing posts older than 12 months
+ARCHIVE_MONTHS="${ARCHIVE_MONTHS:-3}"  # Default to removing posts older than 3 months
 
 # Validate ARCHIVE_MONTHS is a positive integer
 if ! [[ "$ARCHIVE_MONTHS" =~ ^[0-9]+$ ]] || [ "$ARCHIVE_MONTHS" -lt 1 ]; then

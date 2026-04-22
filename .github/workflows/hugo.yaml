@@ -108,6 +108,37 @@ jobs:
           path: failed-files.log
           retention-days: 30
             
+      - name: Check deployment size
+        run: |
+          PUBLIC_SIZE=$(du -sb ./public | cut -f1)
+          PUBLIC_SIZE_MB=$((PUBLIC_SIZE / 1024 / 1024))
+          PUBLIC_SIZE_HUMAN=$(du -sh ./public | cut -f1)
+
+          echo "📊 Built site size: ${PUBLIC_SIZE_HUMAN} (${PUBLIC_SIZE_MB} MB)"
+
+          # GitHub Pages hard limit is 10GB; fail at 8GB to leave safe headroom.
+          # Note: GitHub's recommended site size is 1GB - this threshold only
+          # prevents the hard deploy failure, not soft guideline violations.
+          SIZE_LIMIT_BYTES=$((8 * 1024 * 1024 * 1024))
+
+          if [ "$PUBLIC_SIZE" -gt "$SIZE_LIMIT_BYTES" ]; then
+            echo "❌ ERROR: Built site size (${PUBLIC_SIZE_HUMAN}) exceeds the 8GB safety threshold!"
+            echo ""
+            echo "GitHub Pages has a 10GB artifact hard limit. To fix this:"
+            echo "  1. Manually trigger the 'Archive Old Posts' workflow with a lower month count"
+            echo "     (go to Actions → Archive Old Posts → Run workflow)"
+            echo "  2. Or reduce the default ARCHIVE_MONTHS in archive-old-posts.yaml"
+            echo ""
+            echo "Current post counts by directory:"
+            find content/posts -mindepth 2 -maxdepth 2 -type d | sort | while read dir; do
+              count=$(find "$dir" -name "*.md" | wc -l)
+              echo "  $dir: $count posts"
+            done
+            exit 1
+          fi
+
+          echo "✅ Size check passed (${PUBLIC_SIZE_HUMAN} is within the 8GB limit)"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
         with:

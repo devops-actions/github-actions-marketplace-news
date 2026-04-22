@@ -13,7 +13,7 @@ on:
       archive_months:
         description: 'Number of months to keep (older posts will be archived)'
         required: false
-        default: '12'
+        default: '3'
         type: string
 
 permissions: {}
@@ -45,7 +45,7 @@ jobs:
         id: archive
         run: |
           # Validate and set archive months from input or default to 12
-          MONTHS="${{ github.event.inputs.archive_months || '12' }}"
+          MONTHS="${{ github.event.inputs.archive_months || '3' }}"
           
           # Validate it's a positive integer
           if ! [[ "$MONTHS" =~ ^[0-9]+$ ]] || [ "$MONTHS" -lt 1 ]; then
@@ -80,7 +80,7 @@ jobs:
           
           # Create commit message
           git commit -m "Archive old posts: removed $removed_count posts" \
-                     -m "This automated commit removes blog posts older than ${{ github.event.inputs.archive_months || '12' }} months to reduce deployment size and improve build performance." \
+                     -m "This automated commit removes blog posts older than ${{ github.event.inputs.archive_months || '3' }} months to reduce deployment size and improve build performance." \
                      -m "Removed content can be restored from git history if needed."
           
           # Push to main branch
