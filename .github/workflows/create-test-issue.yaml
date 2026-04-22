@@ -9,14 +9,15 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Permissions needed for issue creation
-permissions:
-  issues: write
-  contents: read
+# No workflow-level permissions - defined at job level
+permissions: {}
 
 jobs:
   create-test-issue:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@fe104658747b27e96e4f7e80cd0a94068e53901d # v2.16.1
