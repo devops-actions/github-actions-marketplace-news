@@ -94,9 +94,65 @@ Before committing changes to workflows:
 3. Run CodeQL security scans on workflow changes
 4. Verify `.gitignore` excludes build artifacts
 
-## Documentation
+## Pages Size Management
 
-When adding new features:
+GitHub Pages has a **1GB recommended site size** and a **10GB hard artifact limit**. Hugo generates
+one HTML page per post plus many tag/list/pagination pages, so post count directly drives artifact
+size. The build workflow checks the size of `./public` before uploading and fails early (at 8GB)
+with a clear message rather than letting the deploy-pages action time out.
+
+### How to check the current situation
+
+```bash
+# Post counts per year/month directory
+find content/posts -mindepth 2 -maxdepth 2 -type d | sort | while read dir; do
+  echo "$dir: $(find "$dir" -name "*.md" | wc -l) posts"
+done
+
+# Total post count
+find content/posts -name "*.md" | wc -l
+```
+
+In CI the built-site size is logged in the "Check deployment size" step of the Hugo workflow.
+
+### Retention policy
+
+The `archive-old-posts.yaml` workflow (scheduled monthly on the 1st) removes posts older than
+**3 months** by default. Because the script operates at **month-bucket granularity** (not exact
+days), "3 months" means everything before the calendar month that is 3 months ago is removed — in
+practice you keep roughly 4 calendar months of data.
+
+> **Example:** running on 2026-04-22 with `ARCHIVE_MONTHS=3` sets a cutoff of January 2026.
+> All posts in `2025/` are removed; all posts in `2026/01` and later are kept.
+
+### How to manually clean up
+
+1. Go to **Actions → Archive Old Posts → Run workflow**
+2. Enter a lower `archive_months` value to be more aggressive (e.g. `2` or `1`)
+3. The workflow commits the removal directly to `main` — **this is destructive and immediate**
+
+### Restoring archived posts from git history
+
+```bash
+# Find the commit that deleted a month's worth of posts
+git log --oneline --diff-filter=D -- "content/posts/2025/11/*"
+
+# Restore a specific file
+git checkout <commit-sha>~1 -- content/posts/2025/11/some-post.md
+
+# Restore an entire month
+git checkout <commit-sha>~1 -- content/posts/2025/11/
+```
+
+### When to adjust retention
+
+- If the "Check deployment size" step warns about size approaching 8GB, reduce `ARCHIVE_MONTHS`
+  in `.github/workflows/archive-old-posts.yaml` (all three places: `default:`, runtime fallback
+  `|| '3'`, and the commit message string)
+- Post growth is accelerating; as of April 2026 the repo sees 1,500–2,100 new posts/month, so
+  the 3-month window will need periodic review
+
+
 
 1. Update relevant README files in subdirectories
 2. Document new environment variables
