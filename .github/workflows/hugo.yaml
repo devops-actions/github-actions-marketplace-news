@@ -30,7 +30,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pages: write
       issues: write
     outputs:
@@ -55,6 +55,41 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           submodules: recursive
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Auto-cleanup old posts if needed
+        run: |
+          chmod +x ./scripts/auto-cleanup-posts.sh
+          ./scripts/auto-cleanup-posts.sh
+
+          # If files were removed, commit and push before building.
+          # We MUST push successfully to prevent the deployed site from
+          # drifting out of sync with the source repository.
+          if git status --porcelain | grep -qE "^ D content/posts"; then
+            removed_count=$(git diff --name-only content/posts/ | wc -l)
+            git add content/posts/
+            git commit -m "chore: auto-archive old posts during build" \
+                       -m "Automatically removed $removed_count post files during deployment because total post count exceeded the safe threshold (POST_COUNT_THRESHOLD=$POST_COUNT_THRESHOLD)." \
+                       -m "Removed content can be restored from git history if needed."
+
+            echo "Pushing cleanup commit to main..."
+            if ! git push origin HEAD:main; then
+              echo "❌ Failed to push cleanup commit to main."
+              echo "   This may be due to branch protection rules or a non-fast-forward conflict."
+              echo "   Please run the 'Archive Old Posts' workflow manually and retry the deployment."
+              exit 1
+            fi
+            echo "✅ Cleanup committed and pushed ($removed_count files removed)"
+          fi
+        env:
+          POST_COUNT_THRESHOLD: '2000'
+          MAX_MONTHS: '1'
 
       - name: Setup Pages
         id: pages
