@@ -29,7 +29,7 @@
       <link>{{ .Permalink }}</link>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
       <guid>{{ .Permalink }}</guid>
-      <description>{{ .Summary | plainify }}</description>
+      <description>{{ .Summary | plainify | htmlUnescape | htmlEscape }}</description>
       <content:encoded><![CDATA[{{ .Content }}]]></content:encoded>
     </item>
     {{- end -}}
