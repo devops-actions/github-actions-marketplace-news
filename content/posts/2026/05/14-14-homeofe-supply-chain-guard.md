@@ -1,0 +1,32 @@
+---
+title: Supply Chain Guard
+date: 2026-05-14 14:38:19 +00:00
+tags:
+  - homeofe
+  - GitHub Actions
+draft: false
+repo: https://github.com/homeofe/supply-chain-guard
+marketplace: https://github.com/marketplace/actions/supply-chain-guard
+version: v5.2.12
+dependentsNumber: "0"
+actionType: Composite
+---
+
+
+Version updated for **https://github.com/homeofe/supply-chain-guard** to version **v5.2.12**.
+
+- This action is used across all versions by **0** repositories.
+
+## Action Type
+This is a **Composite** action.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/supply-chain-guard) to find the latest changes.
+
+## Action Summary
+
+**Supply-Chain-Guard** is an open-source security scanner designed to protect software supply chains by detecting malware campaigns, code-level threats, and supply chain attacks across platforms like npm, PyPI, Docker, Terraform, and GitHub Actions. It automates threat detection, such as identifying typosquatting, dependency confusion, malicious scripts, and compromised repositories, while also generating CycloneDX SBOMs and verifying SLSA provenance. Its key capabilities include correlation of findings into attack-chain incidents, trust scoring, and comprehensive analysis of infrastructure, CI/CD pipelines, and repository metadata to enhance supply chain security.
+
+## What's Changed
+
+See [README.md](https://github.com/homeofe/supply-chain-guard/blob/main/README.md#changelog) for full changelog.
+
