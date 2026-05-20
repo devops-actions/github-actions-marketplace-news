@@ -37,9 +37,25 @@ jobs:
 
 ## Hugo Build Error Handling
 
+### Pre-Build Content Fixer
+
+Before Hugo runs, `scripts/fix-hugo-content.sh` scans all markdown files and
+automatically repairs patterns that would cause parse errors. This prevents
+content from needing to be removed in the first place.
+
+**Currently fixed patterns:**
+- `{{< … >}}` / `{{% … %}}` where the shortcode "name" is an invalid
+  character (e.g., U+2026 `…`). Hugo's parser requires shortcode names to
+  start with `[a-zA-Z0-9_-]`; anything else is escaped with comment markers
+  (`{{</* … */>}}`) so Hugo skips parsing but still renders the literal text.
+
+If the fixer modifies any files, it commits and pushes them to the branch
+before the build proceeds.
+
 ### Automatic Recovery and Issue Creation
 
-When Hugo build failures occur, the repository uses an automatic recovery system:
+When a build failure cannot be auto-fixed, the repository falls back to a
+file-removal recovery system:
 
 **Workflow:**
 1. **Build Attempt**: Hugo tries to build the site
@@ -56,6 +72,7 @@ When Hugo build failures occur, the repository uses an automatic recovery system
 9. **Workflow Failure**: The workflow is marked as failed to alert maintainers
 
 **Scripts:**
+- `scripts/fix-hugo-content.sh`: Pre-build content fixer (runs before build)
 - `scripts/build-hugo-with-recovery.sh`: Handles build recovery
 - `scripts/create-issue-for-failed-posts.sh`: Creates GitHub issues
 
