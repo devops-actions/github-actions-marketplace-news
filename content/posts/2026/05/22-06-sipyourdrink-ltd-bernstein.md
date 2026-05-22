@@ -1,0 +1,100 @@
+---
+title: Bernstein — Multi-Agent Orchestration
+date: 2026-05-22 06:30:48 +00:00
+tags:
+  - sipyourdrink-ltd
+  - GitHub Actions
+draft: false
+repo: https://github.com/sipyourdrink-ltd/bernstein
+marketplace: https://github.com/marketplace/actions/bernstein-multi-agent-orchestration
+version: v2.6.0
+dependentsNumber: "5"
+actionType: Composite
+---
+
+
+Version updated for **https://github.com/sipyourdrink-ltd/bernstein** to version **v2.6.0**.
+
+- This action is used across all versions by **5** repositories.
+
+## Action Type
+This is a **Composite** action.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/bernstein-multi-agent-orchestration) to find the latest changes.
+
+## Action Summary
+
+Bernstein is a deterministic Python-based scheduler designed to coordinate multiple CLI coding agents in parallel git worktrees to achieve a unified goal. It automates the orchestration of tasks across 44 supported CLI agents while ensuring accountability through tamper-evident HMAC-signed audit chains, secure authentication, and detailed artefact lineage tracking. This action simplifies complex multi-agent workflows by providing deterministic scheduling and robust security mechanisms, making it ideal for managing collaborative coding and automation tasks.
+
+## What's Changed
+
+# v2.6.0
+
+Released 2026-05-22.
+
+A large release. Highlights: bidirectional chat drivers with verifiable approvals, per-step replay with a hash-chained journal, operator-registered recurring goals, a signed supervisor surface, a skill catalog with signed manifests, image-attachment provenance, and a sharded CI test suite behind a native merge queue.
+
+## Chat and operator surfaces
+
+- Slack bidirectional driver: drive a session, approve or reject a tool call, and watch streamed output from Slack. Every approval is recorded as a signed entry in the audit chain (covering approver, message timestamp, decision, and tool-call hash), approval scope is pinned to the worker's git worktree, and outbound messages carry an Ed25519 signature so a recipient can verify the workspace identity. Optional `bernstein[slack]` extra. (#1794)
+- Discord bidirectional driver: the same attested-approval model as Slack, plus a per-channel scheduling fence so tasks emitted from one channel cannot land on workers bound to another. Optional `bernstein[discord]` extra. (#1795)
+- Image attachment passthrough: `bernstein run "<prompt>" --attach ./shot.png` carries an image to a vision-capable adapter (Claude, Gemini). The image's SHA-256 is recorded in the audit chain at decision time and anchored as a lineage parent of any artefact produced that turn; spawning with `--attach` on a non-multimodal adapter fails before any process launches. (#1797)
+
+## Orchestration
+
+- Per-step session replay: each agent step is recorded in a hash-chained journal where `step_hash = H(prev_hash, input_hash, model, prompt, tool_call, tool_result)`. `bernstein replay <agent-id>` walks the chain, `bernstein session fork <id> --from-step N` branches a sibling worktree from a chosen step, and replay divergence surfaces as a precise hash mismatch rather than a flaky result. Exported receipts verify offline against the install public key. (#1799)
+- Operator-registered recurring goals: `bernstein schedule add --cron "<expr>" --goal "<text>"` registers a recurring goal that fires inside a single installation, no host cron or external scheduler required. Each fire is a deterministic projection of `(schedule_id, fire_time, last_state)` onto a canonical task graph and is recorded in the audit chain, so `bernstein schedule audit` can prove a nightly sequence ran exactly as expected. (#1798)
+- Operator supervisor surface: `bernstein supervisor status` aggregates the existing stall, watchdog, and respawn-budget detectors into one view. A detected stall produces a signed escalation receipt (last audit entries, identity tokens, structured reason, and a deterministic recommended action) that any verifier can check offline. (#1800)
+- Worktree GC reaps are now anchored to the audit chain: each reap appends a `worktree.reap` event capturing the pre-deletion git HEAD and a clean/dirty flag, and the reap is fail-closed (a worktree is not deleted if the reap cannot be recorded). (#1833)
+- Deterministic replay is now hermetic: a cache miss in replay mode raises a typed error and aborts instead of silently calling the live model, the replay key folds in provider, temperature, and max-tokens, and a coverage line reports hits, misses, and strict violations. A non-strict fall-through stays available behind an explicit, logged opt-in. (#1832)
+
+## Skills
+
+- Skill catalog with signed manifest installs: `bernstein skills catalog browse|search|install|upgrade|info|status`. Each install appends a signed audit-chain entry referencing the manifest URL and content digest, refuses unverified manifests by default, keeps a lockfile that stays consistent across parallel worktrees, and a CI lineage gate rejects a lockfile referencing an unknown manifest digest. (#1796)
+- Skill lifecycle CLI foundation: install, sync, lock, lint, watch, and a local activation log with an env-var opt-out. (#1734)
+
+## Evaluation and observability
+
+- GlitchTip event ingester: a scraper turns open self-hosted error-tracker issues into one regression eval case each, deduped on the issue id, with administrative wiring-probe issues filtered out. The nightly real-run canary feeds this loop. (#1820)
+- CI-failure post-mortem ingestion: a scraper walks merged PRs that needed fix-up commits and synthesizes regression eval cases, so the eval suite tracks the failure modes that surface first in CI. (#1793)
+- Nightly real-run canary: a scheduled job runs real end-to-end flows (worker spawn, git worktree lifecycle, audit-chain append plus verify, signed lineage receipt) against a deterministic stub adapter, with no API key or network, and routes any failure to the telemetry sink. (#1822)
+- Multi-adapter pentest fan-out: `bernstein eval pentest --adapters a,b,c` runs one scenario across adapters and aggregates consensus on `(canonical_vuln_type, normalized_path)`. Single-adapter behaviour stays byte-identical. (#1754)
+- Consolidated SonarQube findings tracker auto-rendered from the live Sonar API. (#1781)
+- Terminal orchestration failures route to the configured error sink. (#1762)
+- Per-row source-adapter provenance for the memory subsystem: `SQLiteMemoryStore` carries an optional `source_adapter` column with `add_many` and `query(read_only_from_adapters=[...])`, via an additive NULL-backfill migration. (#1759)
+
+## CI and quality infrastructure
+
+- Merge-gate stack: pre-merge autosync regenerates mirror docs and formatting on PR branches, a main-red guard blocks merges while main is red, a nightly drift sweep opens a PR on accumulated drift, and the suite now responds to `merge_group:` so a native merge queue tests each PR against the combined branch. Operator runbook at `docs/operations/merge-queue.md`. (#1756)
+- The unit-test job is sharded across parallel runners (`scripts/run_tests.py --shard i/N`), so the per-file isolated suite scales as the test count grows. (#1845)
+- Coverage ratchet: a monotonic gate keeps total coverage from regressing and nudges the per-PR diff-coverage floor up over time. (#1829)
+- Static-analysis sweeper for Sonar findings, widened to MAJOR severity, turns open findings into backlog tickets keyed on the Sonar issue id. (#1763 / #1819)
+- Unit tests are now hermetic: an autouse guard blocks real outbound network connections in `tests/unit/` (loopback allowed), so a network-dependent unit test fails deterministically instead of flaking in CI. (#1856)
+- Opt-in telemetry foundation: consent CLI, a schema guard, and an off-by-default proof. (#1736)
+
+## Reliability and correctness fixes
+
+- Deterministic replay no longer calls the live model on a cache miss (see Orchestration above). (#1832)
+- HSM lineage kind fails fast at config-load when no real adapter is on the classpath; opt-in to the stub via `BERNSTEIN_ALLOW_HSM_STUB=1`. (#1753)
+- MCP OAuth discovery metadata corrected; the Tier-3 cordon now catches deletions and renames. (#1755)
+- Sensitive paths are no longer logged in clear text on the always-allow tamper path; the forensic record keeps the full value with pre-hashed digests. (#1814)
+- Resolved SonarQube findings: S8413 router double-mount, S125 commented-code, S3516 invariant-return, S5754 broad-except, plus a refurb sweep across the new subsystems. (#1786 / #1787 / #1788 / #1807 / #1813 / #1814 / #1815 / #1817 / #1818)
+- Post-CI dispatcher declares per-job permissions explicitly; its child-secret expectations were synced with the GlitchTip forward. (#1746 / #1801)
+- The tampered-signature catalog test corrupts the leading signature byte so verification fails deterministically (a trailing-byte flip could be a no-op and let the test reach the network). (#1843)
+- Workflow loader rejects `interactive: true` at config-load instead of crashing mid-run (closes #1110). (#1760)
+- Adapter dual-binary discovery handles the antigravity / gemini migration. (#1748 and follow-ups)
+
+## Internals and docs hygiene
+
+- Dropped the unused `bernstein.benchmark.head_to_head` module from the wheel. (#1767)
+- Reorganized the docs tree; internal working notes consolidated under `docs/_internal/`. (#1768)
+- Front-page content, page metadata, and stale README translations refreshed. (#1769)
+- Repository-wide formatting pass; AGENTS.md mirror set regenerated. (#1771 / #1776 / #1777)
+
+## Operator follow-ups
+
+- Set `BERNSTEIN_AUTOSYNC_TOKEN` (fine-grained PAT or GitHub App token with `contents:write`) so autosync amends trigger downstream CI without manual empty commits.
+- Set `vars.PR_TEXT_HYGIENE_DENYLIST` to activate the PR text-hygiene gate.
+- Configure the chat drivers (`BERNSTEIN_SLACK_TOKEN` / `BERNSTEIN_DISCORD_TOKEN`) and the telemetry DSN to enable the chat surfaces and the GlitchTip ingester loop.
+- Graduate the Sonar sweeper severity per `docs/operations/sonar-sweeper.md` and review the merge-queue runbook at `docs/operations/merge-queue.md`.
+
