@@ -1,0 +1,122 @@
+---
+title: Bernstein — Multi-Agent Orchestration
+date: 2026-07-25 00:19:25 +00:00
+tags:
+  - sipyourdrink-ltd
+  - GitHub Actions
+draft: false
+repo: https://github.com/sipyourdrink-ltd/bernstein
+marketplace: https://github.com/marketplace/actions/bernstein-multi-agent-orchestration
+version: v3.9.0
+dependentsNumber: "5"
+actionType: Composite
+actionSummary: |
+  Bernstein is a deterministic orchestrator that automates CLI coding tasks using various adapters. It provides reproducible runs by scheduling them in plain Python and ensures checkable results through an always-on lineage spine and replay journal. The action supports multiple agents, including Claude Code, Codex, Gemini CLI, and 40+ more, with options for local and air-gap installations and auditing receipts offline.
+---
+
+
+Version updated for **https://github.com/sipyourdrink-ltd/bernstein** to version **v3.9.0**.
+
+- This action is used across all versions by **5** repositories.
+
+## Action Type
+This is a **Composite** action.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/bernstein-multi-agent-orchestration) to find the latest changes.
+
+## Action Summary
+
+Bernstein is a deterministic orchestrator that automates CLI coding tasks using various adapters. It provides reproducible runs by scheduling them in plain Python and ensures checkable results through an always-on lineage spine and replay journal. The action supports multiple agents, including Claude Code, Codex, Gemini CLI, and 40+ more, with options for local and air-gap installations and auditing receipts offline.
+
+## What's Changed
+
+A feature release. This wave widens the verifiability surface: the run journal, lineage spine, and HMAC audit chain gain new first-class receipts across identity and delegation, outbound payments, non-coding artifacts, evaluation, and cross-agent interop, and a hardening pass runs through the event, admission, MCP-audit, cost, and process-reap surfaces. No existing public API changes; upgrade in place, but read the behaviour-change note below first. The exhaustive index is `docs/reference/FEATURE_MATRIX.md`.
+
+## Behaviour changes (read before upgrading)
+
+- **A halted mission phase no longer halts the whole mission, and is no longer
+  reported as the active phase (#2683).** Phases already run under isolated
+  budget envelopes at dispatch, so exhausting one phase's envelope never gated a
+  sibling's spend. The status *projection* had not caught up: it reported a
+  halted phase as the active phase and folded any halt into an overall
+  `halted` mission, so one exhausted envelope masked a runnable sibling. The
+  projection now skips halted (and passed) phases when selecting the active
+  phase, and reports the mission `halted` only when no phase remains runnable.
+  A halted phase beside a runnable one now leaves the mission active with the
+  runnable phase reported active.
+
+  The active phase and the overall mission state are both hashed into
+  `mission_status_hash`, so this correction deliberately moves that hash for any
+  ledger carrying a halt, and for every ledger it moves the schema-version
+  field alone. `MISSION_STATUS_SCHEMA_VERSION` is therefore bumped from 1 to 2.
+  That field is how a verifier tells "folded under newer projection rules" apart
+  from "tampered with": an archived ledger stays reproducible because
+  `project_mission` (and `project_mission_from_ledger`) accept an explicit
+  `schema_version`, and projecting an archived ledger under `schema_version=1`
+  reproduces its original status hash byte for byte. The pinned v1 goldens
+  assert exactly that reproduction.
+
+  Halt semantics are unchanged and stay chain-anchored: a halted phase still
+  seals its halt receipt onto the work ledger and mirrors it onto the HMAC audit
+  chain. Isolation means a sibling phase continues, not that a halt is weakened.
+  The mission daily-progress digest embeds `mission_status_hash`, so its
+  `digest_hash` and `receipt_id` move with the projection even though the digest
+  document schema itself is unchanged.
+
+## Identity and delegation
+
+- Attenuated delegation capability tokens: each hop is a detached-JWS token over a JCS-canonical body whose caveats can only narrow (permissions, task-id allowlist, path prefixes, expiry, uses, depth), verifiable offline from the token bytes with the registry unavailable, and minted as a chain-anchored event (#2901).
+- The install-identity signature on outbound agent-facing requests now binds the request body (an RFC 9530 Content-Digest folded into the RFC 9421 covered set), and the per-hop delegation ledger serialises its read-modify-write under a cross-process lock so concurrent writers can no longer fork the chain (#2935).
+- A2A server surface: a signed capability card served at both well-known paths, `message/send` + `tasks/get` over JSON-RPC with SSE, auth declared in the card, and every inbound task returning a chain-anchored lineage receipt an external caller can verify offline; clients without streaming or artifacts still work through polling (#2911).
+- AGNTCY ADS publication: `bernstein a2a publish --surface agntcy-ads` emits an OASF capability descriptor that is a deterministic projection of the signed card, carrying a provenance attestation signed by a trust root distinct from the card key; republishing an unchanged node is byte-identical (#2943).
+
+## Payments and cost governance
+
+- Signed payment mandates with chain-anchored receipts: a `SpendMandate` is an Ed25519-signed, content-addressed authorization bounding amount, currency, recipient, and expiry in a `human_present` or `delegated` presence mode; every attempt is a `TransactionReceipt` (a refusal is a first-class receipt with a closed reason), amounts are string-encoded integer nano-units with no float in a signed payload, and cumulative spend is aggregated under a lock so concurrent workers sharing a mandate cannot exceed the cap (#2902). The mandate and consent-receipt surfaces were then hardened (#2936).
+- x402 settlement hook: metered MCP gateway calls settle through the mandate framework, binding the signed intent, the authorized calls, and the settlement reference into one chain-anchored consent receipt (#2937).
+
+## Non-coding artifacts and evaluation
+
+- Typed artifact contract (slice 1): an `ArtifactKind` / `ArtifactSpec` threaded onto `Task` (defaulting to `code_diff`), widened lineage artefact kinds, per-kind canonical serialisers over one shared core, three new completion signals (`schema_valid` / `criteria_match` / `hash_stable`), and `bernstein artifact verify` — so a report, dataset, or action log is a signed, content-addressed lineage record rather than a blob (#2903).
+- Figure grounding for report artifacts: every material number in a report must trace to an anchored source (attachment, artifact, or query receipt) or the task does not complete; the figures sidecar is inside the artifact's own content hash, and `bernstein artifact verify` renders per-figure provenance (#2912).
+- Content-addressed query receipts: a read-only SQL result set an agent consumed is canonicalised and its hash bound into a signed lineage entry; `bernstein datasource verify` proves it offline and `--re-execute` reports MATCH or DRIFT, and DML/DDL is refused (#2909).
+- Deterministic replay-debugging surface: `bernstein replay debug` walks the Merkle step chain to name the exact diverging step and field, emits a byte-identical two-run path-diff, forks from a step, and produces an offline-verifiable debug receipt (#2900).
+
+## Cluster and lifecycle
+
+- Leaderless MESH claim journal (phases 1-2): a signed, append-only, hash-chained claim journal with a pure `project_claims` fold that two nodes reduce to byte-identical state, and a deterministic lowest-entry-hash supersede rule; the SQLite ledger becomes a projection of the journal on the opt-in path while STAR behaviour is unchanged (#2907).
+- Mission phase isolation is described in the behaviour-change note above (#2683).
+
+## Integrations
+
+- Generic OData v4 system-of-record integration: a watermark/delta trigger source with a deterministic, chain-anchored poll cursor, and receipt-anchored write-backs (GET-before-PATCH with `If-Match`, typed 412/428 conflicts, draft-activate) where every write-back is a signed audit event verifiable by `bernstein audit verify` (#2908).
+- Self-hosted OpenAI-compatible endpoint certification: `bernstein endpoints certify --base-url` produces the existing signed certification record for an arbitrary endpoint, with a docs page covering the certify → verify loop and the exercised endpoint families (#2913).
+
+## Hardening and security
+
+- Bounded hardening passes through the event feed, triggers, webhooks, and receipts (#2890); the pool/lease admission engine, ledger, tags, and verifier (#2891); MCP stateless/gateway/client audit ordering (#2892); provider-state mutation capture (#2893); cost-scheduling receipts and the price table (#2894); and process reap, platform compat, and worktree isolation (#2895).
+- `bernstein audit verify` is now total over an undecodable chain segment: a non-UTF-8 segment is reported as a named verification failure at the exact byte offset instead of raising out of `verify()` (#2880).
+- `bernstein lineage verify` fails closed with a distinct exit code when the audit key is missing, instead of misreporting a setup problem as tamper (#2882).
+- The SLA-receipt log sink escapes caller-supplied paths so a CR/LF path can no longer forge log lines (#2881); adapter capability-profile selection is recorded at spawn so replay detects drift (#2883).
+- The CI weekly-digest and skills-publish workflows were hardened, along with skills packaging (#2945, #2946).
+
+## Observability
+
+- The OpenTelemetry GenAI-semconv gaps in the signed OTLP span projection were closed (#2896).
+
+## CLI and documentation
+
+- Operator-surface follow-ups from the 3.8.2 sweep: an honest dashboard capacity denominator, `stop --force` process-group reaping, a live-scan `ps` cross-check, and a `bernstein cluster status` node view (#2897).
+- The README now front-loads the four differentiators as a scannable at-a-glance ahead of the full capability list (#2938); the feature matrix was refreshed for currency across the verifiability, identity, payments, and provenance surfaces shipped since the last pass (#2941); the agent-doc mirrors gained currency guards so the generated views cannot silently drift (#2906).
+- A decision record measures the cost of enabling the HMAC audit chain by default and defines the migration path, without flipping the default (#2905).
+
+## Thanks
+
+Thanks to @Maqbool61 for documenting and helping certify the self-hosted OpenAI-compatible endpoint path (#2913).
+
+---
+
+```bash
+pip install --upgrade bernstein==3.9.0
+```
+
