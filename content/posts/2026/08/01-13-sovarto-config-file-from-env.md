@@ -1,0 +1,36 @@
+---
+title: Update a config file with values from environment
+date: 2026-08-01 13:58:19 +00:00
+tags:
+  - sovarto
+  - GitHub Actions
+draft: false
+repo: https://github.com/sovarto/config-file-from-env
+marketplace: https://github.com/marketplace/actions/update-a-config-file-with-values-from-environment
+version: v0.0.4
+dependentsNumber: "?"
+actionType: Node
+nodeVersion: 20
+actionSummary: |
+  This GitHub Action replaces environment variables in a specified configuration file, automating tasks such as updating sensitive data dynamically. It helps ensure that your configuration files remain secure by using secrets and placeholders instead of hard-coded values.
+---
+
+
+Version updated for **https://github.com/sovarto/config-file-from-env** to version **v0.0.4**.
+
+- This action is used across all versions by **?** repositories.
+
+## Action Type
+This is a **Node** action using Node version **20**.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/update-a-config-file-with-values-from-environment) to find the latest changes.
+
+## Action Summary
+
+This GitHub Action replaces environment variables in a specified configuration file, automating tasks such as updating sensitive data dynamically. It helps ensure that your configuration files remain secure by using secrets and placeholders instead of hard-coded values.
+
+## What's Changed
+
+- feat: Add support for .env files (e706be3)
+- chore: More info (d440258)
+- feat: Initial version (e440a96)
