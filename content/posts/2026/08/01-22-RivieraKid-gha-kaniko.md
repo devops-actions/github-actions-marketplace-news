@@ -1,0 +1,33 @@
+---
+title: Kaniko Build Action
+date: 2026-08-01 22:23:37 +00:00
+tags:
+  - RivieraKid
+  - GitHub Actions
+draft: false
+repo: https://github.com/RivieraKid/gha-kaniko
+marketplace: https://github.com/marketplace/actions/kaniko-build-action
+version: v0.0.0-alpha
+dependentsNumber: "?"
+actionType: Docker
+actionSummary: |
+  This GitHub Action prints "Hello World" or "Hello" followed by a name to the log. It automates greeting people, solving the problem of automatically sending personalized greetings in automated workflows. The key capabilities include accepting an input for the person to greet and providing the current time when greeting is sent.
+---
+
+
+Version updated for **https://github.com/RivieraKid/gha-kaniko** to version **v0.0.0-alpha**.
+
+- This action is used across all versions by **?** repositories.
+
+## Action Type
+This is a **Docker** action.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/kaniko-build-action) to find the latest changes.
+
+## Action Summary
+
+This GitHub Action prints "Hello World" or "Hello" followed by a name to the log. It automates greeting people, solving the problem of automatically sending personalized greetings in automated workflows. The key capabilities include accepting an input for the person to greet and providing the current time when greeting is sent.
+
+## What's Changed
+
+**Full Changelog**: https://github.com/RivieraKid/gha-kaniko/compare/v1...v0.0.1
