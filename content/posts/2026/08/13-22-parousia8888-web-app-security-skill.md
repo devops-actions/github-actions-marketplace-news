@@ -1,0 +1,141 @@
+---
+title: Web App Security Skill
+date: 2026-08-13 22:23:58 +00:00
+tags:
+  - parousia8888
+  - GitHub Actions
+draft: false
+repo: https://github.com/parousia8888/web-app-security-skill
+marketplace: https://github.com/marketplace/actions/web-app-security-skill
+version: v0.4.0
+dependentsNumber: "?"
+actionType: Composite
+actionSummary: |
+  This GitHub Action automates the security testing of web applications by leveraging AI coding agents to detect potential vulnerabilities such as OS command injection. It provides detailed explanations and remediation proposals, helping users understand how to secure their projects and ensure that changes do not introduce new risks. The action supports a wide range of programming languages and codebases, including JavaScript/TypeScript and Python Web code.
+---
+
+
+Version updated for **https://github.com/parousia8888/web-app-security-skill** to version **v0.4.0**.
+
+- This action is used across all versions by **?** repositories.
+
+## Action Type
+This is a **Composite** action.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/web-app-security-skill) to find the latest changes.
+
+## Action Summary
+
+This GitHub Action automates the security testing of web applications by leveraging AI coding agents to detect potential vulnerabilities such as OS command injection. It provides detailed explanations and remediation proposals, helping users understand how to secure their projects and ensure that changes do not introduce new risks. The action supports a wide range of programming languages and codebases, including JavaScript/TypeScript and Python Web code.
+
+## What's Changed
+
+# v0.4.0 release evidence
+
+Scope, audit, harden, and retest web projects with AI coding agents and reproducible evidence.
+
+Web App Security Skill v0.4.0 is the evidence-integrity and useful-detection release. It keeps the
+agent-guided hardening methodology while making narrow automated results harder to overstate.
+
+## Release identity
+
+- Version/tag: `v0.4.0`
+- Source identity: the commit peeled from the SSH-signed annotated tag; the exact 40-character SHA
+  is also recorded in `web-app-security-skill-0.4.0.release.json` and the provenance attestation.
+- Runtime matrix: Node.js 22 and 24 on Ubuntu and macOS; Bash 3.2 remains covered on macOS.
+- External adapters: Gitleaks `8.30.1` and OSV-Scanner `2.5.0`, installed and pinned by the caller.
+
+The Markdown file is part of the source commit it describes, so it does not embed a fabricated
+self-referential commit SHA. Verify the exact published identity with the signed tag and manifest.
+
+## Evidence model and migration
+
+Report v2 binds findings to subject, scope, rule revision, adapter and ruleset identity. Per-rule
+coverage records discovered, eligible, scanned, excluded, skipped, truncated and failed work. A
+missing or incomplete check is explicit `unknown`/unavailable evidence and cannot establish `fixed`.
+
+Historical v1 reports remain readable but are never silently comparable. `migrate-report` records
+their original SHA-256 and explicit user binding as non-comparable lineage; a new persisted v2 audit
+is required before a later retest can prove a fix. Moved or cloned projects require explicit
+`rebind` acknowledgement rather than path or repository-name inference. See
+[`docs/report-v2-migration.md`](../report-v2-migration.md).
+
+## Detection and reporting changes
+
+- Built-in source checks remain deliberately narrow: lockfile absence, environment-named files,
+  public Node inspector bindings and common production source-map settings.
+- Gitleaks checks committed history and the working tree. OSV-Scanner checks supported recorded
+  lockfiles and may query the public OSV advisory service. Neither adapter is downloaded by the
+  product and project dependencies are not executed.
+- Every external scanner match is `suspected`. Gitleaks does not prove credential validity or
+  exposure; OSV does not prove reachability, deployed version or exploitability.
+- Reports separate `security_exposure`, `supply_chain`, `search_discoverability`, `reliability` and
+  `evidence_integrity`. A HIGH discoverability result is not a HIGH security vulnerability.
+- JSON, Markdown, HTML, SARIF and JUnit are committed as one private atomic evidence bundle after
+  sanitization and validation. Existing output is not overwritten.
+- The composite Action keeps v0.3 crawl behavior and adds source mode. External findings require an
+  acknowledged alert-owner policy before they can affect the configured gate.
+
+## Five-project evidence
+
+The dated `2026-08-14` corpus ran the complete v2 source path at immutable commits without probing a
+hosted project or executing project dependencies.
+
+| Project | Confirmed | Suspected | Boundary |
+|---|---:|---:|---|
+| Linkwarden | 0 | 270 | OSV advisory rows are mutable suspected leads |
+| Healthchecks | 0 | 98 | Gitleaks documentation/test matches suspected; OSV not applicable |
+| Open WebUI | 0 | 144 | Source-map and OSV leads suspected; public `.map` delivery unknown |
+| Uptime Kuma | 4 | 93 | Four low-severity missing-lockfile facts in independent `extra/` tools; external leads suspected |
+| Mealie | 0 | 30 | Gitleaks test-material matches suspected |
+
+These records demonstrate applicability, state discipline and false-positive closure. They are not
+labelled benchmark data and do not support a precision/recall score. OSV counts can change as its
+public advisory database changes. Reproduction commands and unreached surfaces are in
+[`docs/case-studies/journeys/`](../case-studies/journeys/README.md).
+
+## Regressions fixed
+
+- Cross-project, tampered, forged, v1 or incomplete baselines cannot manufacture a fixed result.
+- Deep, large, unreadable, malformed and truncated source candidates remain visible in coverage.
+- Crawler-range, sitemap and AWS permission failures become unknown evidence, never a clean result.
+- Cross-domain severity is no longer combined into one security headline.
+- Evidence writes are private, atomic, non-overwriting and rolled back after handled failures.
+- External-tool missing/version/timeout/error/malformed paths fail closed; upstream OSV severity
+  cannot inflate local severity.
+- Duplicate Gitleaks rows are deduplicated while distinct fingerprints remain distinct; finding IDs
+  survive sanitizer patterns that resemble numeric account identifiers.
+
+The complete bug-to-test map is [`docs/regression-inventory.md`](../regression-inventory.md).
+
+## Release verification
+
+The release workflow runs the full gate, builds every artifact twice and compares bytes, verifies
+archive paths, manifest, SHA-256 list and SPDX 2.3 SBOM, then exercises an isolated v0.3.0-to-v0.4.0
+upgrade plus clean install/version/start/upgrade/uninstall behavior. GitHub provenance is requested
+only after those checks pass. A separate consumer repository verifies both backward-compatible crawl
+mode and built-in source mode against the exact candidate/release commit.
+
+Verify the published tag after release:
+
+```bash
+git -c gpg.ssh.allowedSignersFile=.github/release-signers verify-tag v0.4.0
+```
+
+Verify downloaded assets with `SHA256SUMS`, then compare the manifest source commit with
+`git rev-parse 'v0.4.0^{}'` and verify GitHub provenance. The post-publication verifier now trusts
+the immutable v0.4.0 asset digests, and the documented bootstrap pins and verifies that verifier
+before installation.
+
+## Unsupported and unknown
+
+- This is not a general SAST/DAST scanner, authenticated pentest or automatic patching system.
+- BOLA/IDOR, business logic, LLM/OAuth, database isolation and most framework-specific sinks remain
+  agent-guided and require project context.
+- No authenticated third-party deployment, production cloud account or upstream live system was
+  actively tested for this release.
+- Native Windows, PowerShell and WSL2 are unsupported because no maintained verification environment
+  exists. Node 20 and earlier are not supported release targets.
+- Release signatures, checksums and attestations establish artifact identity and build origin; they
+  do not prove every security conclusion is correct or that an installed project is secure.
+
