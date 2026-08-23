@@ -1,0 +1,120 @@
+---
+title: Web App Security Skill
+date: 2026-08-23 23:05:11 +00:00
+tags:
+  - parousia8888
+  - GitHub Actions
+draft: false
+repo: https://github.com/parousia8888/web-app-security-skill
+marketplace: https://github.com/marketplace/actions/web-app-security-skill
+version: v0.5.4
+dependentsNumber: "0"
+actionType: Composite
+actionSummary: |
+  The GitHub Action `web-app-security-skill` automates the security assessment of web applications by leveraging AI coding agents and providing reproducible evidence. It performs an audit of a project's local source code, identifies potential security issues such as authentication and authorization controls, and provides actionable recommendations for reviewing and remedying these issues. The action supports various frameworks and tools to ensure comprehensive coverage and accurate results.
+---
+
+
+Version updated for **https://github.com/parousia8888/web-app-security-skill** to version **v0.5.4**.
+
+- This action is used across all versions by **0** repositories.
+
+## Action Type
+This is a **Composite** action.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/web-app-security-skill) to find the latest changes.
+
+## Action Summary
+
+The GitHub Action `web-app-security-skill` automates the security assessment of web applications by leveraging AI coding agents and providing reproducible evidence. It performs an audit of a project's local source code, identifies potential security issues such as authentication and authorization controls, and provides actionable recommendations for reviewing and remedying these issues. The action supports various frameworks and tools to ensure comprehensive coverage and accurate results.
+
+## What's Changed
+
+# v0.5.4 release evidence
+
+Status: published. The signed tag, GitHub Release, npm package with provenance, verified installer
+trust entry and signed `v1` promotion are publicly verifiable.
+
+## Outcome
+
+Scope, audit, harden, and retest web projects with AI coding agents and reproducible evidence.
+
+v0.5.4 expands the bounded automatic first pass. Five built-in rules cover exact Git tracking of
+sensitive `.env` names, JavaScript session-secret/cookie settings and Python session-cookie/CSRF
+settings. Eight project-owned Opengrep rules add same-file request-to-SQL, outbound-URL, file-path
+and redirect flows across JavaScript/TypeScript and Python. `--profile deep` selects the built-in
+detector plus the four existing external adapters without downloading them.
+
+The release retains the corrected evidence claim: the self-authored planted suite is named
+rule-contract conformance and reports literal positive/negative/state contract results. A separate
+historical real-world regression corpus executes four minimized correctness failures and one
+review-visible expected benign DOM-sink match against product code.
+
+The main-branch try-now command follows npm latest. Reusable CI, signed release verification and the
+trusted installer remain pinned to an immutable version or source commit.
+
+## Evidence sets
+
+- [`v0.5.4 rule-contract conformance`](../conformance/v0.5.4-rule-contract-conformance.md): 25
+  built-in risk and 2 evidence-integrity planted positive/negative/state contracts.
+- [`v0.5.4 historical real-world regressions`](../regressions/v0.5.4-real-world-regressions.md):
+  report-summary rendering, pnpm workspace lock inheritance, nested-template coverage,
+  path-equivalent retest handling and numeric SVG DOM-sink review.
+- [`Known limitations`](../../KNOWN_LIMITATIONS.md): parser, evidence-state, incremental-audit and
+  claim boundaries.
+
+Neither evidence set is a representative production-vulnerability benchmark. Stable detector reach
+is 25 built-in risk rules, 2 evidence-integrity rules and 16 opt-in external-adapter rules: 43 total.
+Opengrep matches remain same-file `suspected` leads. A missing deep-profile prerequisite is explicit
+`unknown` evidence and exit 3, never a clean result.
+
+## Published verification
+
+The local release gates include:
+
+```bash
+npm run conformance:rules
+npm run regressions:real-world
+npm run check
+/usr/local/bin/python3 /Users/kenn/.codex/skills/.system/skill-creator/scripts/quick_validate.py .
+```
+
+The release procedure additionally verifies the signed tag after it exists:
+
+```bash
+git -c gpg.ssh.allowedSignersFile=.github/release-signers verify-tag v0.5.4
+```
+
+## Public release facts
+
+- The SSH-signed `v0.5.4` tag peels to source commit
+  `d9ee538089ac813dcd454d10b45f14b958c1ec19`. Candidate CI run
+  [`32648619071`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32648619071)
+  and CodeQL run
+  [`32648619088`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32648619088)
+  passed before publication.
+- GitHub Release workflow
+  [`32648846862`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32648846862)
+  published the source archive, SPDX 2.3 SBOM, manifest and checksums on 2026-08-23. The public
+  asset SHA-256 values are `00742dfe4d0118e8361380314c4fe01ed4e3924db1015d080b882bd3841431a5`
+  (archive), `cfa209b59004ce29bbf808eadc37b1fbb8bfd8eb162e462c29661e8d18a592e1`
+  (SBOM), `f50d8b974666694ccaebdb583127cc62471536943b028f7057919cf47b4529c1`
+  (manifest) and `cbd7d771f81cee065989dc386fef239fc65d2d0966b1ca23fb5c8b9f94bdce12`
+  (`SHA256SUMS`).
+- npm workflow
+  [`32650181341`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32650181341)
+  published `web-app-security-skill@0.5.4` at `2026-08-23T15:58:01.250Z` through the configured
+  GitHub OIDC trusted publisher. npm records shasum
+  `1fb71399684025257e069a63b46eb058cca590d1`, integrity
+  `sha512-N9UlD9l05Mmm1El7VFf1CGR6nSSG8msea+JjwlN/uwv7rV8gUbGp3DZlEKO8yFMWw+uqLFyYYBocCD8PTRPUdA==`
+  and [SLSA provenance](https://registry.npmjs.org/-/npm/v1/attestations/web-app-security-skill@0.5.4).
+  A fresh public tarball contained 140 files and matched the signed tag package payload file by file.
+- The signed movable `v1` tag object is
+  `464ba64a4d256dbf3b26f78101730b24a4337bc4` and peels to the same immutable source commit.
+  Public consumer run
+  [`32650353548`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32650353548)
+  passed both the passive path and expected authorization rejection.
+
+Artifact identity, signatures and provenance establish origin and byte identity. They do not prove
+that every detector conclusion is correct or that a scanned project is secure.
+
