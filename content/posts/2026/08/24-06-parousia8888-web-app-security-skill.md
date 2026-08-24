@@ -1,0 +1,147 @@
+---
+title: Web App Security Skill
+date: 2026-08-24 06:15:48 +00:00
+tags:
+  - parousia8888
+  - GitHub Actions
+draft: false
+repo: https://github.com/parousia8888/web-app-security-skill
+marketplace: https://github.com/marketplace/actions/web-app-security-skill
+version: v0.7.0
+dependentsNumber: "0"
+actionType: Composite
+actionSummary: |
+  This GitHub Action automates security audits of web projects using AI coding agents. It helps identify and document security risks without requiring an offensive-security background. The action reads local project files, does not contact a deployment, and writes reports with plain-language explanations and evidence of potential vulnerabilities. For supported JavaScript/TypeScript frameworks, it also generates route inventories, route-level controls, and SHA-256 sidecars for comprehensive security reviews.
+---
+
+
+Version updated for **https://github.com/parousia8888/web-app-security-skill** to version **v0.7.0**.
+
+- This action is used across all versions by **0** repositories.
+
+## Action Type
+This is a **Composite** action.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/web-app-security-skill) to find the latest changes.
+
+## Action Summary
+
+This GitHub Action automates security audits of web projects using AI coding agents. It helps identify and document security risks without requiring an offensive-security background. The action reads local project files, does not contact a deployment, and writes reports with plain-language explanations and evidence of potential vulnerabilities. For supported JavaScript/TypeScript frameworks, it also generates route inventories, route-level controls, and SHA-256 sidecars for comprehensive security reviews.
+
+## What's Changed
+
+# v0.7.0 release evidence
+
+Status: published and promoted. The signed tag, GitHub Release, npm package, provenance, immutable
+verified-installer/bootstrap chain and signed `v1` alias are publicly retrievable. Immutable and
+post-promotion Action consumers passed.
+
+## Outcome
+
+Scope, audit, harden, and retest web projects with AI coding agents and reproducible evidence.
+
+v0.7.0 corrects route-control aggregation and extends route-security into a bounded
+access-control-chain review. Application controls are listed once; authentication, route
+authorization and unclassified route controls are separate; and routes with no observed
+route-scoped control form a human-review queue without becoming vulnerability findings.
+
+For supported syntax, the analyzer records identity evidence and a caller-selected object reaching
+a Prisma, Drizzle or experimental Supabase operation in the same entry or through one exact local
+call. It stops before a second local call. Next.js Server Actions are represented separately from
+HTTP routes. Missing visible controls or query constraints do not prove BOLA/IDOR, and every
+Supabase chain retains an external RLS-policy dependency.
+
+## Evidence sets
+
+- [`v0.7.0 access-control review`](../reviews/v0.7.0-access-control-review.md): four fixed public
+  commits, 173 HTTP routes, 23 Server Actions and 32 manually reviewed entries. All 12 observed
+  ordinary-project chains are partial and zero are completed.
+- [`v0.7.0 access-control regressions`](../regressions/v0.7.0-access-control-real-world-regressions.md):
+  four minimized correctness failures covering application-guard aggregation, chain fingerprinting,
+  Next monorepo roots and exact tsconfig alias resolution.
+- [`v0.6.0 rule-contract conformance`](../conformance/v0.6.0-rule-contract-conformance.md): the
+  unchanged 25 built-in risk and three evidence-integrity source-rule contracts.
+- [`Known limitations`](../../KNOWN_LIMITATIONS.md): exact route, Server Action, identity,
+  data-operation, module-resolution, one-hop and external-policy boundaries.
+
+The ordinary-project review is purposive source-only evidence. It is not representative production
+precision/recall, whole-program data flow, runtime reachability, exploitability, DAST or proof that
+an audited project is secure.
+
+## Published verification
+
+The bounded local gate included:
+
+```bash
+npm run check
+/usr/local/bin/python3 /Users/kenn/.codex/skills/.system/skill-creator/scripts/quick_validate.py .
+npm pack --dry-run --json
+git -c gpg.ssh.allowedSignersFile=.github/release-signers verify-tag v0.7.0
+```
+
+One final-tree full local gate, one package inspection and bounded clean-room consumers are enough
+unless a channel-specific failure appears.
+
+## Public release facts
+
+- The SSH-signed annotated `v0.7.0` tag object
+  `b0de94c044082d951c12d95950360d4250e12d31` peels to source commit
+  `bfed608b5d1abe56b6b34b09f0c6ef59f17eab4a`. Final-tree CI run
+  [`32680695072`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32680695072)
+  and CodeQL run
+  [`32680695073`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32680695073)
+  passed before tagging.
+- GitHub Release workflow
+  [`32680851023`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32680851023)
+  published the reproducible source archive, SPDX 2.3 SBOM, manifest and checksums on 2026-08-24.
+  Public SHA-256 values are `c5fa68b48e3c4a00ccc9c55fbd7a375eb1adddf9e7e8b7398f5e14a93974aa78`
+  (archive), `3e0c80aee8a093a3d04fa950d6e78a604c81958a4b7f984ab78cbd97276f0bf4`
+  (SBOM), `f707c4cceafc4864917fd47de525c522117b53c9a5724eb6a4e80e57cbbe5e37`
+  (manifest) and `f40a58952a221f677c9bc76b923b0f4ebd3a3dfe34b16bfb8ced885cb46aaa47`
+  (`SHA256SUMS`). Fresh downloads passed checksums, manifest validation, archive lifecycle checks and
+  GitHub provenance verification for all four assets.
+- npm workflow
+  [`32680989366`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32680989366)
+  published `web-app-security-skill@0.7.0` at `2026-08-24T01:49:15.577Z` through GitHub OIDC
+  trusted publishing. npm records shasum `a46d7ab62f577dfc21998ba3350d74c7d256d86d`, integrity
+  `sha512-GhVvvQIDb2ahF1aiRzKD2ilszykYY8X2b6i3RAlJ0TJu7o6KjhVK09edqlAG8IRRVD/MU3Z5Q5+8m4ZMw6HFpw==`
+  and [SLSA provenance](https://registry.npmjs.org/-/npm/v1/attestations/web-app-security-skill@0.7.0).
+  Its 177 files matched the corresponding signed source-archive files byte for byte.
+- A clean-room exact-version `npx --yes web-app-security-skill@0.7.0 demo` run produced the expected
+  suspected HIGH lead, review proposal, fixed security retest and passing functional retest.
+- Public-state commit `b3e77a87cc5ee16195c0965012217416ee3a935d` passed CI
+  [`32681514684`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32681514684)
+  and CodeQL
+  [`32681514679`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32681514679).
+  Its `scripts/install-verified.mjs` SHA-256 is
+  `4e3c6ce6c8c3ec0cfa7972edbc85b93885bae64cb714a87c926e81fc49410422`.
+- Verifier-pin commit `cb36196fb438fb0ad0e5b5a6a27043bf48ffb018` passed CI
+  [`32681707779`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32681707779)
+  and CodeQL
+  [`32681707703`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32681707703).
+  Its `scripts/bootstrap-install.sh` SHA-256 is
+  `544d0ded89ed98467c275c838f033148d944668b0b56842d849ff8ae4abc63d2`.
+- A clean-room public bootstrap downloaded that exact script, verified its SHA-256, installed into
+  an isolated temporary home and returned `Web App Security Skill 0.7.0`. It verified source commit
+  `bfed608b5d1abe56b6b34b09f0c6ef59f17eab4a`, archive, manifest, checksums and SBOM. Optional GitHub
+  attestation was explicitly reported as not run because the isolated home had no authenticated
+  `gh` session; checksum and manifest verification still ran.
+- Immutable Action consumer
+  [`32682001909`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32682001909)
+  passed against full commit `bfed608b5d1abe56b6b34b09f0c6ef59f17eab4a`. Its NestJS fixture
+  confirmed that the application rate-limit guard is listed once, authentication and authorization
+  remain separate, an unprotected state-changing object route is review evidence, and no confirmed
+  vulnerability is fabricated.
+- The SSH-signed annotated `v1` tag object
+  `b04630846eeb621fd40397f78b28ad92c4c4e6bc` was moved with a guarded lease and peels to
+  `bfed608b5d1abe56b6b34b09f0c6ef59f17eab4a`. Its signature verifies against
+  `.github/release-signers` with fingerprint
+  `SHA256:DmZYVL1dLhUmgaJnfZKpZIexgzMv5jk9+YCoBT3zRIg`.
+- Post-promotion public `@v1` consumer
+  [`32682179514`](https://github.com/parousia8888/web-app-security-skill/actions/runs/32682179514)
+  passed the passive crawl, authorization-refusal and immutable NestJS route-security v2 checks.
+
+Artifact identity, consumer success and provenance do not prove every detector conclusion correct
+or an audited project secure. `v1` is intentionally movable; consumers requiring an immutable
+workflow must use the full source commit.
+
