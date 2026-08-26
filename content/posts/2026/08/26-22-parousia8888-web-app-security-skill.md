@@ -1,0 +1,143 @@
+---
+title: Web App Security Skill
+date: 2026-08-26 22:49:23 +00:00
+tags:
+  - parousia8888
+  - GitHub Actions
+draft: false
+repo: https://github.com/parousia8888/web-app-security-skill
+marketplace: https://github.com/marketplace/actions/web-app-security-skill
+version: v0.7.3
+dependentsNumber: "0"
+actionType: Composite
+actionSummary: |
+  This GitHub Action automates the security audit of web projects using AI coding agents. It helps identify potential security vulnerabilities and provides actionable insights on how to address them without needing extensive offensive-security knowledge. The action can be run locally from the project root, reading local files and not contacting deployments or editing code. For supported JavaScript/TypeScript frameworks, it generates route security reports detailing application controls, authentication, authorization, and BOLA/IDOR risks.
+---
+
+
+Version updated for **https://github.com/parousia8888/web-app-security-skill** to version **v0.7.3**.
+
+- This action is used across all versions by **0** repositories.
+
+## Action Type
+This is a **Composite** action.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/web-app-security-skill) to find the latest changes.
+
+## Action Summary
+
+This GitHub Action automates the security audit of web projects using AI coding agents. It helps identify potential security vulnerabilities and provides actionable insights on how to address them without needing extensive offensive-security knowledge. The action can be run locally from the project root, reading local files and not contacting deployments or editing code. For supported JavaScript/TypeScript frameworks, it generates route security reports detailing application controls, authentication, authorization, and BOLA/IDOR risks.
+
+## What's Changed
+
+# v0.7.3 release evidence
+
+Status: release candidate. Phases 0-6 of the external-audit remediation plan are complete, and the
+Phase 7 five-project candidate rerun is promoted into its active catalog. The local candidate gate
+passed on code commit `0c6bbeda3785cf6e66df2920b5309f9d6a18c892`. Exact-commit CI/CodeQL, signed
+tag, GitHub Release, npm provenance, verified installer, immutable Action consumer, signed `v1`
+promotion and durable live-verification record remain gated.
+Published v0.7.2 facts stay in `docs/release-state.json` until each v0.7.3 channel is independently
+observed.
+
+## Outcome
+
+v0.7.3 closes the 26-item external-audit ledger through accepted fixes, narrower corrected claims,
+explicit limitations and historical evidence boundaries. It strengthens existing bounded analysis
+and lifecycle evidence; it does not add a detector family or framework claim.
+
+- Project-controlled paths, member expressions and workspace declarations are bounded. OSV inputs
+  are checked at persisted scope and again at the subprocess sink, including symlink containment.
+- Route inventory fails closed for supported-looking computed, unresolved or zero-eligible shapes.
+  Authentication, authorization and unclassified route controls remain separate, while Next.js
+  middleware/proxy participation is application context rather than per-route proof.
+- The public bounded authorization surface is `accessChains`. Shared principal/tenant vocabulary,
+  Prisma singleton resolution and incomplete-client evidence improve the existing chain without
+  claiming runtime authorization enforcement.
+- Direct compound HTML assignments, typed Python boolean configuration and context-specific
+  Markdown encoding close three narrow source/report correctness defects.
+- Five ordinary-project journeys use one pinned active contract with separate byte, deterministic
+  semantic, mutable-advisory and manual-annotation identity. The v0.7.3 rerun uses exact tool commit
+  `0cd79fd` and bounds Gitleaks history to commits reachable from each target commit; unrelated refs
+  are excluded. Historical v0.6.0 review bytes remain immutable and current-analyzer reproduction
+  remains `verification_pending` where raw invocation evidence was not retained.
+- Candidate, public and post-public release states are separate. Test outcome accounting records
+  passed, failed, skipped and not-run work, and the final post-public workflow creates one durable
+  live-verification Release asset only after immutable and `v1` consumers pass.
+- Current conformance, schema, capability, roadmap, release procedure and historical-plan deviation
+  contracts are executable and agree with the shipped bounded behavior.
+
+Stable inventory remains 25 built-in risk rules, three evidence-integrity rules, 16 opt-in external
+adapter risk rules and bounded Express, NestJS and Next.js App Router/Server Action review. Pattern
+matches remain `suspected`; unavailable evidence remains `unknown` and cannot become pass.
+
+## Issue closure
+
+All issue records remain available in
+[`V0.7.3_EXTERNAL_AUDIT_REMEDIATION_PLAN.md`](../V0.7.3_EXTERNAL_AUDIT_REMEDIATION_PLAN.md).
+
+| Issue set | Candidate disposition | Closure mechanism |
+|---|---|---|
+| EA-01 to EA-03 | accepted or accepted-reframed | input/path containment, bounded analysis and structural workspace matching |
+| EA-04 | claim-corrected | documented exit-domain handling with valid incomplete artifacts retained |
+| EA-05 to EA-07, EA-10 to EA-14 | accepted, reframed or claim-corrected | fail-closed framework inventory, separated controls and bounded access-chain/source fixes |
+| EA-08, EA-09 | claim-corrected | dead parallel output removed; one public authorization-analysis surface and shared vocabulary |
+| EA-15 | claim-corrected | typed Python boolean evidence rather than value-string comparison |
+| EA-16 to EA-18 | accepted or accepted-reframed | active five-project contract with pinned prerequisites and separated digest semantics |
+| EA-19 to EA-24 | accepted or accepted-reframed | independent release/test states, explicit CA input, least privilege and corrected trust claims |
+| EA-25, EA-26 | accepted | immutable historical provenance, stable current paths and executable document/as-built contracts |
+
+## Regression evidence
+
+- Scope, OSV, workspace and untrusted-source matrices plant traversal, symlink, deep-expression,
+  invalid metadata, wildcard and neighboring valid inputs.
+- Route matrices cover computed and optional Express registrations, sibling middleware mounts,
+  unclassified controls, zero eligible modules, static/dynamic Next matchers and Prisma singleton
+  positive and negative neighbors.
+- JS/TS, Python and renderer tests plant compound sinks, string/numeric boolean impostors and
+  Markdown heading/task injection.
+- Journey tests cover exit 0/1/2/3, prerequisite drift, deterministic versus mutable digests,
+  Gitleaks redaction collisions, shallow-history refusal, ref-set independence and five exact target
+  commits.
+- Release/test tests cover early test failure, skipped external prerequisites, candidate refusal to
+  claim public state, public digest mismatch, stale `v1`, required attestation and repeatable durable
+  live-record publication.
+- Document, conformance, scope-schema and historical-provenance checks reject stale labels, broken
+  links, undeclared planned-file drift, path-validation disagreement and overwritten history.
+
+Every silently reversible false-clean mechanism received a focused machine assertion and a
+plant-the-failure check in its owning phase. Candidate stabilization also corrected old test and
+fixture assumptions without converting route-evidence `unknown` into pass.
+
+## Candidate verification
+
+Completed local candidate checks:
+
+```bash
+npm run check                    # exit 0
+npm pack --dry-run --json        # exit 0; 201 files; 574376 bytes
+quick_validate.py .              # Skill is valid
+git diff --check                 # exit 0
+```
+
+`npm run check` recorded 71 passed, zero failed, one skipped and zero not-run test files; its four
+named prerequisite surfaces recorded three passed, zero failed, one skipped and zero not run. The
+default local result is therefore `partial`, not a claim that the opt-in real-adapter binaries or a
+Claude CLI surface ran. The package dry run reported unpacked size 2,300,148 bytes, shasum
+`478e9e5eac15fde316860e5278bc5a9a1b4e58b2` and integrity
+`sha512-XNEzUecyqg9CgrvmF3tuEIFJ5Jyy3RMTQPg47dHKP4RTJCmyUVwzYTDZfrqhs5thnvSLyNKjPpPG27dMjaBU7g==`.
+
+Tag verification remains pending until exact-commit CI and CodeQL pass and the SSH-signed annotated
+`v0.7.3` tag exists. The tag triggers reproducible archive, SPDX SBOM, checksums, release manifest,
+GitHub attestation and GitHub Release publication. npm trusted publishing, installer/bootstrap trust
+updates, immutable Action and signed `v1` promotion remain separate later gates.
+
+```bash
+git -c gpg.ssh.allowedSignersFile=.github/release-signers verify-tag v0.7.3
+```
+
+## Public release facts
+
+Pending. This section will record only publicly retrievable tag, workflow, artifact, npm,
+installation, immutable consumer, moving-alias and live-verification facts after each check passes.
+
