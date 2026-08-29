@@ -1,0 +1,207 @@
+---
+title: Web App Security Skill
+date: 2026-08-29 21:59:13 +00:00
+tags:
+  - parousia8888
+  - GitHub Actions
+draft: false
+repo: https://github.com/parousia8888/web-app-security-skill
+marketplace: https://github.com/marketplace/actions/web-app-security-skill
+version: v0.8.0
+dependentsNumber: "0"
+actionType: Composite
+actionSummary: |
+  This GitHub Action automates web application security audits using AI coding agents. It provides actionable security reports with realistic consequences, reviewable changes, and evidence-based decisions. The action supports JavaScript/TypeScript frameworks and generates route-security.json and route-security.md files. It can be used to audit a local project without contacting a deployment or modifying code, focusing on actionable results and providing clear explanations of what needs human confirmation.
+---
+
+
+Version updated for **https://github.com/parousia8888/web-app-security-skill** to version **v0.8.0**.
+
+- This action is used across all versions by **0** repositories.
+
+## Action Type
+This is a **Composite** action.
+
+Go to the [GitHub Marketplace](https://github.com/marketplace/actions/web-app-security-skill) to find the latest changes.
+
+## Action Summary
+
+This GitHub Action automates web application security audits using AI coding agents. It provides actionable security reports with realistic consequences, reviewable changes, and evidence-based decisions. The action supports JavaScript/TypeScript frameworks and generates route-security.json and route-security.md files. It can be used to audit a local project without contacting a deployment or modifying code, focusing on actionable results and providing clear explanations of what needs human confirmation.
+
+## What's Changed
+
+# v0.8.0 release evidence
+
+Status: complete. Immutable release, npm package, verified installer and signed `v1` are published.
+The immutable and moving-alias consumers passed, and the byte-matched durable live-verification
+record is available as both a workflow artifact and GitHub Release asset.
+
+Scope, audit, harden, and retest web projects with AI coding agents and reproducible evidence.
+
+## Outcome
+
+v0.8.0 deepens the existing JavaScript/TypeScript route review without adding a framework, ORM,
+general SAST or automatic-repair claim.
+
+- Route-security v3 follows exact route, query, direct JSON-body and Server Action object selectors
+  through at most four exact project-local call edges.
+- Object, principal and tenant facts remain separate. Supported Prisma/Drizzle operations record
+  visible query predicates, supported post-load comparisons, absent supported constraints or
+  incomplete evidence as different outcomes.
+- Express, NestJS, Next.js App Router and Next.js Server Actions share one bounded project graph,
+  while framework inventory and access-path coverage remain independent.
+- Compatible v3 baselines can expose lost authorization evidence or incomplete current paths.
+  Route-security v1/v2 baselines are `not_comparable / route_schema_changed` under v3.
+- Each rendered review lead includes the professional term, plain-language meaning, conditional
+  consequence, evidence limit, review proposal, change risk and owner/non-owner/normal-flow checks.
+
+`completed` means the bounded static model reached a supported operation. It does not prove runtime
+reachability, correct authorization, control-flow dominance, exploitability or absence of an
+unsupported path. Clerk, Better Auth and Supabase remain experimental; Supabase always requires
+deployed RLS-policy evidence.
+
+## Fixed-commit effectiveness evidence
+
+The denominator was frozen before implementation at 14 eligible paths across four exact public
+commits, with a target of 10 and a six-path grounded floor. It was not reduced after misses.
+
+- 13 of 14 frozen paths completed: Drizzle 6/6 and Prisma 7/8.
+- The sole miss, Formbricks `ACTION getMembershipRole`, remains partial with
+  `argument_mapping_ambiguous` and `call_target_unresolved`.
+- The review contains 63 distinct completed operation chains and 50 additional completed review
+  paths outside the frozen score; additional paths were not added to the denominator.
+- Four completed paths retain supporting limitations. Completion does not erase them.
+- Same-machine median runtime ratios were 1.10x to 1.41x against the v0.7.3 baseline, below the 2x
+  stop threshold for all four fixed targets.
+
+The [review](../reviews/v0.8.0-access-control-review.md),
+[provenance record](../reviews/v0.8.0-access-control-review-provenance.md) and
+[minimized regression](../regressions/v0.8.0-access-control-real-world-regression.md) bind these
+facts. This author-selected fixed corpus is bounded effectiveness evidence, not production
+precision/recall, framework-wide coverage or a vulnerability benchmark.
+
+## Candidate verification
+
+The local P13 gate completed with the failure history retained rather than rewritten. The single
+`npm run check` invocation stopped first on a stale curated v2 fixture; its explicit continuation
+then found one duplicate-ID renderer fixture and the v0.7.3-bound active journey catalog. The
+schemas and duplicate-ID validator were not relaxed. After the focused corrections, non-overlapping
+runner records cover all 82 intended test files: 81 passed, zero failed, one opt-in real-adapter file
+skipped and zero not run. Prerequisite surfaces record three passed and one explicit skip. The shell
+smoke suite and every remaining lint/contract command passed; no second monolithic check was run.
+
+Final local artifacts:
+
+- npm dry-run package: v0.8.0, 215 files, 645,212 packed bytes, SHA-1
+  `1b45330758998f04eeacf71166ab20310fd1c1e7`;
+- SPDX 2.3 SBOM: two packages, SHA-256
+  `e3a0cd020e846d6f8af3751a9ff31bf108b4e1813c958b7cc337d2a6846e295f`;
+- parser bundle: SHA-256 `f8d700c78a6d0a50513a672b419074a87597093733d2d69ecee92675d8139698`;
+- active five-project v0.8.0 catalog: exact tool source `80d21afbbca2075a66e761b085e7bd4752fdac7f`,
+  all five fixed checkouts clean, two complete and three explicitly incomplete audit exits;
+- secret scan: two intentional planted test-fixture files, zero production credential values after
+  redacted manual classification;
+- Skill validation, package isolation, document/product/release/distribution contracts and
+  `git diff --check`: passed.
+
+Hosted candidate verification passed before immutable publication on the final release source:
+
+- source commit: `119cbcc7f8d327482df8abfa50a4af0b69fcceee`;
+- [CI run 33263683220](https://github.com/parousia8888/web-app-security-skill/actions/runs/33263683220):
+  `success` on macOS/Ubuntu with Node 22/24, including pinned real-adapter fixtures on Ubuntu Node 22;
+- [CodeQL run 33263683203](https://github.com/parousia8888/web-app-security-skill/actions/runs/33263683203):
+  `success` on the same commit;
+- `main` was observed at that commit, but the branch-protection API reports that `main` is not
+  protected. The hosted checks passed; their enforcement by branch protection is not claimed.
+
+## Immutable publication evidence
+
+```bash
+git -c gpg.ssh.allowedSignersFile=.github/release-signers verify-tag v0.8.0
+```
+
+The SSH-signed annotated tag object is
+`e826ede4b3ee1eab9237b5ea49ba8e340da26bd5` and peels to release source
+`119cbcc7f8d327482df8abfa50a4af0b69fcceee`. Repository-local SSH verification passes, and GitHub
+reports `verified: true` with reason `valid` for that exact tag object.
+
+[Release workflow 33263798089](https://github.com/parousia8888/web-app-security-skill/actions/runs/33263798089)
+completed successfully and published four immutable assets:
+
+- `SHA256SUMS`: SHA-256
+  `e606db959a83171a6d19a76ff29979e9c5155594fa993be376fb36a10c75899e`;
+- release manifest: SHA-256
+  `3bee5679b353c3071eac1452cf52b2439979b30ded03686afbb734eec63b846a`;
+- SPDX 2.3 SBOM: SHA-256
+  `cce92a9bfdd96617c59d0c49c2f59f0ce07e9ea2b529de2f0dad16f57296a137`;
+- source archive: SHA-256
+  `d6136bdc82975274cc0059ad0bf36e602b447dbfb9cbcca8a7a058b60bb8d888`.
+
+The downloaded asset set passed checksum, manifest, archive lifecycle and GitHub attestation
+verification. The manifest and tag identify the same release source. The archive contains 547
+entries and its SBOM declares SPDX 2.3 with two packages.
+
+[npm trusted-publishing run 33263916671](https://github.com/parousia8888/web-app-security-skill/actions/runs/33263916671)
+published `web-app-security-skill@0.8.0` from the same source. npm records shasum
+`1b45330758998f04eeacf71166ab20310fd1c1e7`, integrity
+`sha512-zbnRkSZ4bdMgRtXprWSp8uvgMswAGjdZstXbcObLJlOIvjnpbmmSHQzdzWPTTlID3giNFfsDH8hchnomYQfUNQ==`
+and SLSA provenance for that workflow/source. All 215 npm package files match the signed release
+source archive byte-for-byte. A fresh-cache exact-version consumer returned
+`Web App Security Skill 0.8.0`.
+
+Verifier commit `f55c80e7c5014ff6d39d61ca8cbb4fec2ec1fbac` records the public v0.8.0 asset
+digests and has SHA-256 `0e3e27ae7f00314668337b9d0a2d8a350ac01b908ab65aa0b2856c614278d5a7`.
+Bootstrap commit `12cb085d7f3a21c2b6ffb6cb2758ee4247e2af9f` fixes that verifier identity and has
+SHA-256 `137b5d8fdf6f616be3aa2631e0134b354fd9142ce19419bad6c37e5b0409480f`.
+Focused trust-chain tests pass locally. Public raw bootstrap retrieval, an isolated clean install
+and the immutable full-SHA Action consumer have now passed. The public bootstrap matched SHA-256
+`137b5d8fdf6f616be3aa2631e0134b354fd9142ce19419bad6c37e5b0409480f` before execution. It installed
+all three supported targets under an isolated HOME with `--attestation required`; GitHub CLI
+attestation verified successfully, and no existing user installation was touched.
+
+[Immutable consumer run 33264836987](https://github.com/parousia8888/web-app-security-skill/actions/runs/33264836987)
+completed successfully against the full release source SHA. The owned Express/Prisma fixture
+produced route-security v3 with completed bounded-path coverage and an observed owner constraint,
+without converting the review evidence into a confirmed-vulnerability claim. The moving-`v1`
+consumer and live-verification jobs were intentionally skipped until P16.
+
+## Final promotion and live verification
+
+Signed annotated `v1` was moved with an exact guarded lease from tag object
+`7bd05668153d21c1ac55ac35e8707703e2a6eb0f` to
+`3e44c123d45f5fc06fa437fe1fbd58a71c5aaaa8`. It peels to immutable release source
+`119cbcc7f8d327482df8abfa50a4af0b69fcceee`. Repository-local signer-policy verification passes,
+and GitHub reports `verified: true` with reason `valid` for the new tag object.
+
+[Final public verification run 33265256940](https://github.com/parousia8888/web-app-security-skill/actions/runs/33265256940)
+completed successfully on coordination commit `43dbc9bdbe31e994560212d56131f60f956805b7`. It verified:
+
+- the immutable full-SHA Express/Prisma route-security v3 consumer;
+- the signed `v1` passive crawl consumer and its authorization-refusal behavior;
+- GitHub Release checksums, manifest, signed tag and build provenance;
+- npm package bytes and provenance;
+- an isolated all-target installer run with GitHub attestation required;
+- the published moving-alias state.
+
+The workflow produced
+[`web-app-security-skill-0.8.0.live-verification.json`](https://github.com/parousia8888/web-app-security-skill/releases/download/v0.8.0/web-app-security-skill-0.8.0.live-verification.json)
+as both a 90-day workflow artifact and durable Release asset. The two downloaded records matched
+byte-for-byte with SHA-256
+`5ff2d022a192ae2d95a805e26464d8e392d3e68d0c91f43fe4ea72887525bead`; the record reports
+`live_verified` and all eight public gates as `verified`.
+
+The expected authorization-refusal probe is visible in the workflow UI as an exit-2 annotation.
+The step used `continue-on-error`, the following assertion required that failure, and the consumer
+job concluded successfully. It is negative-test evidence, not an unhandled workflow failure.
+
+## Public release facts
+
+- GitHub Release: <https://github.com/parousia8888/web-app-security-skill/releases/tag/v0.8.0>
+- npm: <https://www.npmjs.com/package/web-app-security-skill/v/0.8.0>
+- Immutable Action source: `119cbcc7f8d327482df8abfa50a4af0b69fcceee`
+- Signed `v1` tag object: `3e44c123d45f5fc06fa437fe1fbd58a71c5aaaa8`
+- Signed `v1` source: `119cbcc7f8d327482df8abfa50a4af0b69fcceee`
+- GitHub signature state: `verified: true`, reason `valid`
+- Final combined consumer: <https://github.com/parousia8888/web-app-security-skill/actions/runs/33265256940>
+- Durable live-verification record: <https://github.com/parousia8888/web-app-security-skill/releases/download/v0.8.0/web-app-security-skill-0.8.0.live-verification.json>
+
