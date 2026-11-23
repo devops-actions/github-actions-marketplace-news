@@ -1,0 +1,18 @@
+name: "Approve Dependabot PR's"
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  dependabot:
+    # Approves and auto-merges Dependabot minor and patch updates once every commit on the
+    # PR is verified to come from dependabot[bot]. Major updates are left for a human.
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write # the reusable workflow requests it for github-actions updates; without it the run is a startup_failure
+    uses: devops-actions/.github/.github/workflows/approve-dependabot-pr.yml@035baa894c55deb8b154b6d3624e4ce9ab8e7205 # main
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
