@@ -44,7 +44,7 @@ jobs:
       - name: Run archive script
         id: archive
         run: |
-          # Validate and set archive months from input or default to 12
+          # Validate and set archive months from input or default to 3
           MONTHS="${{ github.event.inputs.archive_months || '3' }}"
           
           # Validate it's a positive integer
