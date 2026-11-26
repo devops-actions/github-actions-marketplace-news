@@ -10,7 +10,7 @@ This script removes old blog posts to reduce deployment size and improve build p
 
 **Features:**
 - Deletes posts older than a configurable number of months
-- Default: removes posts older than 12 months
+- Default: removes directories before the cutoff month calculated from 3 months
 - Preserves directory structure for remaining posts
 - Provides detailed logging and statistics
 - Safe to run multiple times (idempotent)
@@ -22,7 +22,7 @@ This script removes old blog posts to reduce deployment size and improve build p
 
 **Usage:**
 ```bash
-# Use default (12 months)
+# Destructive: use default (3 months) on the current content/posts tree
 ./scripts/archive-old-posts.sh
 
 # Custom retention period (6 months)
@@ -30,16 +30,24 @@ ARCHIVE_MONTHS=6 ./scripts/archive-old-posts.sh
 ```
 
 **Environment Variables:**
-- `ARCHIVE_MONTHS`: Number of months to keep active (default: 12, must be positive integer)
+- `ARCHIVE_MONTHS`: Months used to calculate the cutoff (default: 3, must be a positive integer)
 
 **Requirements:**
-- Python 3 (with dateutil package recommended for accurate date calculations)
+- Python 3 (with `python-dateutil` recommended for calendar-month arithmetic)
 - Git (for restoring removed posts from history)
 
 **Output:**
-- Deletes posts from `content/posts/` older than the retention period
+- Deletes whole year directories before the cutoff year and whole two-digit month
+  directories before the cutoff month within that year. The cutoff month itself
+  and later months are kept, regardless of each post's day.
 - Prints statistics about removed and remaining posts
 - Posts can be restored from git history using `git log` and `git checkout`
+
+The cutoff is the current local date minus `ARCHIVE_MONTHS` calendar months when
+`python-dateutil` is installed; otherwise it is the current date minus
+`30 * ARCHIVE_MONTHS` days. The fallback can select a different cutoff month.
+For example, with a January 2026 cutoff, all 2025 directories and 2026/01
+and later are respectively removed and retained.
 
 ### `build-hugo-with-recovery.sh`
 
@@ -149,25 +157,43 @@ When a build error occurs:
 
 ## Testing Locally
 
-You can test the scripts locally:
+From the repository root, run:
 
 ```bash
-# Build with recovery
-./scripts/build-hugo-with-recovery.sh "https://example.com/"
-
-# Check the exit code
-echo $?
-
-# View failed files log
-cat failed-files.log
-
-# View backed up files
-ls -la failed-posts-backup/
+bash scripts/tests/regression.sh
 ```
+
+The suite needs Bash 4 or newer and GNU coreutils, findutils, and grep with PCRE
+support (`grep -P`); it runs on Ubuntu. It uses a fake Python cutoff and fake
+Hugo, so neither Python, Hugo, installed packages, network access, nor secrets
+are required for this command. It copies the scripts into a unique temporary
+directory, runs them against disposable fixtures there, and removes only that
+directory on exit. The CI job runs the same command without persisted checkout
+credentials. These are isolated script regressions, not a real Hugo integration
+build or a test of date calculation or issue creation.
+
+The actual archive script requires Bash and Python 3; `python-dateutil` is
+optional. The production workflow installs Hugo extended 0.160.1 and Dart Sass
+for a real site build. Running the following scripts against real content is
+**not** a safe read-only test, although no secrets are required by the scripts
+themselves:
+
+- `archive-old-posts.sh` and `auto-cleanup-posts.sh` delete content directories.
+- `fix-hugo-content.sh` edits Markdown files in its target directory.
+- `build-hugo-with-recovery.sh` runs Hugo, writes build files and logs, and moves
+  failed content files into a backup directory; Hugo may access the network if
+  site configuration or modules require it.
+- `create-issue-for-failed-posts.sh` contacts GitHub and creates issues; it
+  requires credentials with issue write access.
+
+The archive workflow commits and pushes deletions. The Hugo deployment workflow
+can commit and push cleanup or content fixes, create issues, and deploy. Neither
+workflow is part of the offline test command. Use a disposable copy for any
+additional real-Hugo integration test.
 
 ## Notes
 
 - Failed files are backed up, not deleted permanently
 - The `failed-files.log` format is: `file_path|line:col|error_message`
-- Maximum 10 retry attempts (configurable via `MAX_RETRIES` variable)
+- Maximum 10 build attempts (set in the recovery script)
 - All temporary files are excluded via `.gitignore`
